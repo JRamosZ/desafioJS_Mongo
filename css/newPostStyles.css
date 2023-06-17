@@ -1,0 +1,160 @@
+.editor-bar {
+  background: #f9f9f9;
+  height: 55px;
+}
+@media (max-width: 768px) {
+  .editor-bar {
+    padding-left: 10px !important;
+  }
+}
+
+.editor-button {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  height: 40px;
+  text-align: center;
+  width: auto;
+}
+.editor-button:hover {
+  background: #e6e7f7;
+  color: #2f3ab2;
+  fill: #2f3ab2;
+}
+
+.top-round {
+  border-radius: 8px 8px 0 0;
+}
+@media (max-width: 768px) {
+  .top-round {
+    padding-left: 10px !important;
+  }
+}
+
+.bottom-round {
+  border-radius: 0px 0px 8px 8px;
+}
+@media (max-width: 768px) {
+  .bottom-round {
+    padding-left: 10px !important;
+  }
+}
+
+.post-title {
+  border: none;
+  font-size: 30px;
+  font-weight: 700;
+}
+@media (min-width: 850px) {
+  .post-title {
+    font-size: 50px;
+  }
+}
+.post-title::-moz-placeholder {
+  color: #525252;
+}
+.post-title::placeholder {
+  color: #525252;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.post-text {
+  font-family: "Courier New";
+  font-size: 1.4rem;
+  resize: none;
+}
+@media (max-width: 768px) {
+  .post-text {
+    font-size: 1rem;
+  }
+}
+
+#publishButton {
+  background: #3b49df !important;
+  border-color: #3b49df;
+}
+#publishButton:hover {
+  background-color: #2f3ab2 !important;
+}
+
+#editorText span {
+  background: lightgray;
+  font-family: "Courier New";
+}
+#editorText a {
+  text-decoration: none;
+}
+
+#popText1 {
+  font-size: 15px;
+  margin-top: 120px;
+}
+
+#popText2 {
+  font-size: 15px;
+  margin-top: 190px;
+}
+
+#popText3 {
+  font-size: 15px;
+  margin-top: 350px;
+}
+
+.logo__navbar_new {
+  width: 2.9rem;
+  border-radius: 10%;
+}
+
+#indexButton {
+  background-color: transparent;
+  border: none;
+}
+
+.button_edit {
+  background: none;
+  border: none;
+  font-weight: lighter;
+  width: 3rem;
+  height: 2.4rem;
+}
+
+.button_edit:hover {
+  background-color: rgb(234, 234, 255);
+  border-radius: 12%;
+  color: rgb(104, 104, 252);
+}
+
+.button_preview {
+  background: none;
+  border: none;
+  font-weight: lighter;
+  width: 4rem;
+  height: 2.4rem;
+}
+
+.button_preview:hover {
+  background-color: rgb(234, 234, 255);
+  border-radius: 12%;
+  color: rgb(104, 104, 252);
+}
+
+.button_x {
+  border: none;
+  background: none;
+  font-weight: bolder;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.nav_conteriner_log {
+  align-items: center;
+}
+
+.create_post {
+  height: 0.6rem;
+  color: #323232;
+  font-weight: 600;
+}/*# sourceMappingURL=newPostStyles.css.map */

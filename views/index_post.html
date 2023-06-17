@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Document</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.webp">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="../css/style_index_post.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="../css/style_main.css">
+</head>
+<body>
+    <header class="header-container container-fluid">
+        <div class="nav_bar container-lg justify-content-between d-flex pt-2 pb-2 pe-3 ps-3">
+            <div class="nav_bar_conteriner_input">
+            <button id="hamburgerButton">☰</button>
+            <button id='indexButton' type="button"><img class="logo__navbar__dev" src="/assets/img_navbar/Logo dev.svg" alt=""/></button>
+                <label>
+                    <input class="nav_bar_search" type="search" placeholder=" Search...">
+                </label>  
+            </div>  
+            <div class="nav_bar_conteiner_login">
+                <button class="create-post button__post btn btn-outline-primary" type="submit"><b>Create Post</b></button>
+                <!-- <img class="icon__campaign" src="/assets/img_navbar/icon campaign.svg" alt=""/>
+                <button type="button" class="login__icon" id="login_icon_open"><img src="/assets/img_navbar/icon login.svg" alt=""></button> -->
+                <button type="button" class="login__icon btn dropdown-item shadow-large rounded pe-2 ps-2 mg-0" data-bs-toggle="dropdown" aria-expanded="false" id="login_icon_open">
+                    <img id="userImgNavbar" src="/assets/img_navbar/icon login.svg" alt="">
+                </button>
+                <ul class="login__icon__ul__drop dropdown-menu dropdown-menu-end border p-2 shadow-md">
+                    <li><button class="dropdown-item d-flex flex-column justify-content-between pt-2 pb-2 rounded" type="button"><p class="m-0"><strong id="userDropName">DefaultUserName</strong></p><p id="userDropNick" class="m-0">@username</p></button></li>
+                    <div></div>
+                    <li><button class="create-post dropdown-item d-flex justify-content-between pt-2 pb-2 rounded" type="button">Create Post</a></button></li>
+                    <div></div>
+                    <li><button id="signOutButton" class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded" type="button">Sign Out</a></button></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main class="main-container container-lg">
+        <div>
+            <div class="d-flex flex-column-reverse flex-md-row">
+                <nav class="nav-left col-12 col-md-1 pe-0 pt-3 pb-3 position-sticky sticky-bottom sticky-md-top h-100">
+                    <div class="p-1 rounded">
+                        <div class="nav-left d-flex flex-row flex-md-column justify-content-around align-content-center text-center position-sticky sticky-top gap-5 rounded">
+                            <div class="btn-group dropend nav-left__drop__div text-center d-flex justify-content-around m-0">
+                                <button type="button" class="nav-left__drop__button_h1 btn border border-0 dropdown d-flex  align-content-center justify-content-center" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="material-symbols-outlined more_horiz m-0">heart_plus</span>
+                                </button>
+                                <ul class="nav-left__ul__drop_h dropdown-menu border shadow-lg p-0 m-0">
+                                    <li class="nav-left__li"><button
+                                        class="dropdown-item nav-left__icons d-flex justify-content-between p-3 rounded bg-light align-content-center"
+                                        type="button"><h4 class="m-0 p-0">💖&nbsp;&nbsp;🦄&nbsp;&nbsp; 🤯&nbsp;&nbsp; 🙌&nbsp;&nbsp; 🔥</h4></button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group dropend nav-left__drop__div text-center d-flex justify-content-around m-0">
+                                <button type="button" class="nav-left__drop__button_h2 btn border border-0 dropdown d-flex  align-content-center justify-content-center " data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="material-symbols-outlined more_horiz m-0">mode_comment</span>
+                                </button>
+                            </div>
+                            <div class="btn-group dropend nav-left__drop__div text-center d-flex justify-content-around m-0">
+                                <button type="button" class="nav-left__drop__button_h3 btn border border-0 dropdown d-flex  align-content-center justify-content-center " data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="material-symbols-outlined more_horiz m-0">bookmark</span>
+                                </button>
+                            </div>
+                                
+                            <div class="btn-group dropend nav-left__drop__div text-center d-flex justify-content-around m-0">
+                                <button type="button" class="nav-left__drop__button_h4 btn border border-0 dropdown d-flex  align-content-center justify-content-center rounded-circle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="material-symbols-outlined more_horiz m-0">more_horiz</span>
+                                </button>
+                                <ul class="nav-left__ul__drop dropdown-menu p-2 border shadow-lg">
+                                    <li><button
+                                        class="aside-card3__button__drop dropdown-item d-flex justify-content-between pt-2 rounded"
+                                        type="button"><strong>Copy link</strong><span
+                                        class="material-symbols-outlined">edit_note</span></button>
+                                    </li>
+                                    <li><button
+                                        class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                        type="button">Share to Twitter</button>
+                                    </li>
+                                    <li><button
+                                        class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                        type="button">Share to LinkedIn</button>
+                                    </li>
+                                    <li><button
+                                        class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                        type="button">Share to Reddit</button>
+                                    </li>
+                                    <li><button
+                                        class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                        type="button">Share to Facebook</button>
+                                    </li>
+                                    <li><button
+                                        class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                        type="button">Share to Mastodon</button>
+                                    </li>
+                                    <li><button
+                                        class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                        type="button">Share Post via...</button>
+                                    </li>
+                                    <li><button
+                                        class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                        type="button">Report Abuse</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="col-12 col-md-11 d-flex flex-wrap">
+                    <content class="col-12 col-lg-8 pt-3 pb-3 ">
+                        <div class="aside d-flex flex-column gap-3">
+                            <div class="card post-card mb-3 p-2 ">
+                                <img src="" class="card-img-top" alt="img1-main-article" id="cardMainImagePost"/>
+                                <div class="card-body">
+                                    <div class="author-data d-flex gap-3 align-items-center mt-3 ms-3">
+                                        <img id="authorImage" class="post-card__preview-image"
+                                            src="" class="card-img-top"
+                                            alt="img2-main-article"/>
+                                        <div>
+                                            <b id="author-name" class="post-card__author-name">Default Autor</b>
+                                            <p id="posted-date" class="post-card__posted-date">Default Date</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="reactions d-flex flex-row justify-content-between gap-3 gap-sm-5 justify-content-sm-start align-items-center me-0 ms-0 me-sm-2 ms-sm-2 me-md-5 ms-md-5 mt-5">
+                                        <div>💖 134</div>
+                                        <div>🦄 9</div>
+                                        <div>🤯 4</div>
+                                        <div>🙌 7</div>
+                                        <div>🔥 11</div>
+                                    </div>
+                                    <div class="title, me-0 ms-0 me-sm-2 ms-sm-2 me-md-5 ms-md-5">
+                                        <h2 id="titlePost" class="title1 display-5">
+                                            Default Título
+                                        </h2>
+                                        <div class="tags mt-4">
+                                            <a href=""> <span>#</span>webdev</a>
+                                            <a href=""> <span>#</span>vscode</a>
+                                            <a href=""> <span>#</span>productivity</a>
+                                            <a href=""> <span>#</span>beginners</a>
+                                        </div>
+                                    </div>
+                                    <div class="post-card__card-content">
+                                        <!--Este es el contenido de la card-->
+                                        <p id="postContent" class="text-paraghraps me-0 ms-0 me-sm-2 ms-sm-2 me-md-5 ms-md-5 mt-5">Default Contenido</p>
+
+
+                                        <div class="card-detail m-5"></div>
+                                        <h2 class="fs-3">
+                                    </div>
+
+                                    <div class="container-comments">
+                                        <div class="dropdown">
+                                            <div
+                                                class="container__comments d-flex justify-content-between align-items-center">
+                                                <button class="btn dropdown-toggle mb-3" type="button"
+                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    Top comments (49)
+                                                </button>
+                                                <button class="btn btn-light">Subscribe</button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
+                                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                                            <span>Top</span>
+                                                            <span class="text-muted">Most upvoted and relevant comments
+                                                                will
+                                                                be
+                                                                first</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                                            <span>Latest</span>
+                                                            <span class="text-muted">Most recent comments will be first
+                                                                first</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item d-flex flex-column" href="#">
+                                                            <span>Oldest</span>
+                                                            <span class="text-muted">The oldest comments will be
+                                                                first</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex gap-3 align-items-start mb-3">
+                                        <img class="avatar-sm" src="https://randomuser.me/api/portraits/women/51.jpg"
+                                            alt="">
+                                        <div class="flex-grow-1">
+                                            <textarea name="" id="" cols="30" rows="10"
+                                                class="form-control w-100 mb-3"></textarea>
+                                            <div class="flex gap-3">
+                                                <button class="btn btn-dev-purple text-white">Submit</button>
+                                                <button class="btn btn-secondary">Preview</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center gap-3 align-items-center">
+
+                                        <a class="comments-footer__text" href="#">Code of Conduct</a>
+                                        <p class="comments-footer__dot">.</p>
+                                        <a class="comments-footer__text" href="#">Report abuse</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="card-devto m-0 m-sm-2 m-md-5">
+                                    <p class="devto__text1">DEV Community</p>
+                                    <h5 class="devto__text2">
+                                        <a class="fs-3" href="#">Advice For Junior Developers</a>
+                                    </h5>
+                                    <img src="https://picsum.photos/500/250" class="card-img-top w-85 mx-auto d-block"
+                                        alt="img-card-devto" />
+                                    <p class="text-paraghraps mt-4">
+                                        Advice from a carrer of 15+ years for new and benigger
+                                        developers just getting started on their journey
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card final-card ">
+                            <div class="card-body">
+                                <h3>Read next</h3>
+                                <div class="card-body">
+                                    <div class="author-data d-flex gap-3 align-items-center">
+                                        <img class="final-card__preview-image"
+                                            src="https://randomuser.me/api/portraits/men/83.jpg" class="card-img-top"
+                                            alt="img2-main-article" />
+                                        <div>
+                                            <a class="final-card__author-name" href="#">Best Crypto Tokens To Invest In
+                                                2023 for Crowdfunding Platforms</a>
+                                            <p class="final-card__posted-date text-muted">JessieTomaz - May 12</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="author-data d-flex gap-3 align-items-center">
+                                        <img class="final-card__preview-image"
+                                            src="https://randomuser.me/api/portraits/women/54.jpg" class="card-img-top"
+                                            alt="img2-main-article" />
+                                        <div>
+                                            <a class="final-card__author-name" href="#">View Transitions API</a>
+                                            <p class="final-card__posted-date text-muted">Andrew Bone -May 6</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="author-data d-flex gap-3 align-items-center">
+                                        <img class="final-card__preview-image"
+                                            src="https://randomuser.me/api/portraits/men/34.jpg" class="card-img-top"
+                                            alt="img2-main-article" />
+                                        <div>
+                                            <a class="final-card__author-name" href="#">How we implemented the card
+                                                animation in Appwrite Cloud
+                                                Public Beta</a>
+                                            <p class="final-card__posted-date text-muted">
+                                                Thomas G. Lopes - May 9
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="author-data d-flex gap-3 align-items-center">
+                                        <img class="final-card__preview-image"
+                                            src="https://randomuser.me/api/portraits/men/66.jpg" class="card-img-top"
+                                            alt="img2-main-article" />
+                                        <div>
+                                            <a class="final-card__author-name" href="#">AWS XRAY with FASTAPI</a>
+                                            <p class="final-card__posted-date text-muted">
+                                                Ashutosh Singh -Apr 12
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </content>
+                    <aside class="col-12 col-lg-4 p-0 ps-lg-3 pt-lg-3 pb-lg-3 d-flex flex-column gap-3">
+                        <div class="aside d-flex flex-column gap-3 h-100">
+                            <div class="aside-card1 d-flex flex-column rounded p-3 border gap-3">
+                                <a href="#" class="aside-card1__anchor1">
+                                    <img src="" class="rounded-circle" id="asideCard1AuthorImg">
+                                    <h3 id="asideCard1AuthorName">Default Author</h3>
+                                </a>
+                                <button class="aside-card1__button btn rounded text-white" type="button">Follow</button>
+                                <p id="asideCard1Description" class="aside-card1__userinfo1 p-0 m-0">Default description</p>
+                                <div class="aside-card1__userinfo2">
+                                    <p class="p-0 m-0"><strong>Location</strong></p>
+                                    <p id="asideCard1Location" class="p-0 m-0 mb-1">Default location</p>
+                                    <p class="p-0 m-0"><strong>Education</strong></p>
+                                    <p id="asideCard1Education" class="p-0 m-0 mb-1">Default education</p>
+                                    <p class="p-0 m-0"><strong>Joined</strong></p>
+                                    <p id="asideCard1Joined" class="p-0 m-0 mb-1">Default joined date</p>
+                                </div>
+                            </div>
+                            <div class="aside-card2 d-flex flex-column rounded border" id="asideCard2">
+                                <h3>More from <a href="#" class="aside-card2__anchor1" id="asideCard2Author">Default Author</a></h3>
+                                <!-- <a href="#" class="aside-card2__anchor2">
+                                    <p class="aside-card2__paragraph1">Join the WeCoded Virtual Meetup 🌟</p>
+                                    <p class="aside-card2__paragraph2">#wecoded&nbsp;&nbsp;#meta</p>
+                                </a>
+                                <a href="#" class="aside-card2__anchor3">
+                                    <p class="aside-card2__paragraph1">Join us for #WeCoded 2023!</p>
+                                    <p class="aside-card2__paragraph2">#wecoded&nbsp;&nbsp;#meta</p>
+                                </a> -->
+                            </div>
+                            <div class="aside-card3 d-flex flex-column rounded p-3 border position-sticky sticky-top">
+                                <div class="aside-card3__top d-flex justify-content-between">
+                                    <div class="aside-card3__top__right align-content-center">
+                                        <img src="https://picsum.photos/200" class="rounded">
+                                        <h5>The DEV Team</h5>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button"
+                                            class="aside-card3__button__drop btn dropdown-item shadow-large rounded pe-2 ps-2"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <strong>...</strong>
+                                        </button>
+                                        <ul class="aside-card3__ul__drop dropdown-menu dropdown-menu-end border p-2">
+                                            <li><button
+                                                    class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                                    type="button"><span
+                                                        class="material-symbols-outlined">error</span>What's a
+                                                    billboard?</button></li>
+                                            <li><button
+                                                    class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                                    type="button"><span
+                                                        class="material-symbols-outlined">settings</span>Manage
+                                                    Preferences</a></button></li>
+                                            <div></div>
+                                            <li><button
+                                                    class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded"
+                                                    type="button"><span
+                                                        class="material-symbols-outlined">flag</span>Report
+                                                    billboard</a></button></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <a href="#" class="aside-card3__anchor1"><img src="https://www.talentia-software.com/wp-content/uploads/2020/05/Featured-image-Corp-12.png" class="rounded w-100"></a>
+                                <h3 class="mb-2">Did you Know? DEV relies on open source code!</h3>
+                                <p class="aside-card3__paragraph1 mb-3">Yes, that's correct. The code behind everything is <strong>Forem</strong>, which you can find on <a href="https://github.com" target="_blank">GitHub</a>. DEV is just one instance of Forem.</p>
+                                <p class="aside-card3__paragraph2 m-0">Open source is the future of social media.</p>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="container-fluid">
+        <div class="row">
+            <div class="footer" class="col-12">
+                <p><a href="">DEV Community</a> — A constructive and inclusive social network for software developers. With you every step of your journey.</p>
+                <p><a href="">Home</a>· <a href="">Listings</a> · <a href="">Podcasts</a> · <a href="">Videos</a> · <a href="">Tags</a> · <a href="">FAQ</a> · <a href="">Forem</a> · <a href="">Shop</a> · <a href="">Sponsors</a> · <a href="">About</a> · <a href="">Contac</a> · <a href="">Guides</a> · <a href="">Software</a> · <a href="">comparisons</a></p>
+                <p><a href="">Code of Conduct · Privacy Policy · Terms of use</a></p>
+                <p>Built on <a href="">Forem</a> — the <a href="">open source</a> software that powers <a href="">DEV</a> and other inclusive communities.</p>
+                <p>Made with love and <a href="">Ruby on Rails</a>. DEV Community © 2016 - 2023.</p>
+            </div>
+        </div>
+</footer>
+<nav class="section__navSide_post" id="navSide_post">
+    <div class="title_mobile_post">
+        <p>Community</p>
+        <button type="button" id="navlateralClose_post"><b>X</b></button>
+    </div>
+        <div class="section__navSide_section1_post">
+            <a href=""><img src="/assets/img_nav/home.svg"alt="">Home</a>
+            <a href=""><img src="/assets/img_nav/Readinglist.svg" alt="">Reading List</a>
+            <a href=""><img src="/assets/img_nav/listings.svg" alt="">Listings</a>
+            <a href=""><img src="/assets/img_nav/podcasts.svg" alt="">Podcasts</a>
+            <a href=""><img src="/assets/img_nav/video.svg" alt="">Videos</a>
+            <a href=""><img src="/assets/img_nav/tags.svg" alt="">Tags</a>
+            <a href=""><img src="/assets/img_nav/faq.svg" alt="">FAQ</a>
+            <a href=""><img src="/assets/img_nav/forem_shop.svg" alt="">Forem Shop</a>
+            <a href=""><img src="/assets/img_nav/sponsors.svg" alt="">Sponsors</a>
+            <a href=""><img src="/assets/img_nav/dev.svg" alt="">About</a>
+            <a href=""><img src="/assets/img_nav/contact.svg" alt="">Contact</a>
+            <a href=""><img src="/assets/img_nav/guides.svg" alt="">Guides</a>
+            <a href=""><img src="/assets/img_nav/comparisons.svg" alt="">Software comparisons</a>
+        </div>
+        <h1 class="other_post">Other</h1>
+        <div class="section__navSide_section2_post">
+            <a href=""><img src="/assets/img_nav/conduct.svg"alt="">Code of Conduct</a>
+            <a href=""><img src="/assets/img_nav/privacy.svg"alt="">Privacy Policy</a>
+            <a href=""><img src="/assets/img_nav/terms.svg"alt="">Terms of use</a>
+        </div>
+        <div class="section__navSide_networks_post">
+            <a><img src="/assets/img_nav/twiter.svg"alt=""></a>
+            <a><img src="/assets/img_nav/face.svg"alt=""></a>
+            <a><img src="/assets/img_nav/git.svg"alt=""></a>
+            <a><img src="/assets/img_nav/insta.svg"alt=""></a>
+            <a><img src="/assets/img_nav/twich.svg"alt=""></a>
+            <a><img src="/assets/img_nav/mastodon.svg"alt=""></a>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="/js/index_post.js"></script>
+    <script src="/js/navBar.js"></script>
+</body>
+</html>

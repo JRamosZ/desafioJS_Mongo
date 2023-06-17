@@ -1,0 +1,83 @@
+.media-button {
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  gap: 18px;
+  height: 50px;
+  justify-content: center;
+}
+.media-button:nth-child(1) {
+  background: #000000;
+}
+.media-button:nth-child(1):hover {
+  background: #24292f;
+}
+.media-button:nth-child(2) {
+  background: #0a3e4a;
+}
+.media-button:nth-child(2):hover {
+  background: #04313b;
+}
+.media-button:nth-child(3) {
+  background: #24292f;
+}
+.media-button:nth-child(3):hover {
+  background: black;
+}
+.media-button:nth-child(4) {
+  background: #1ea1f1;
+}
+.media-button:nth-child(4):hover {
+  background: #0096f2;
+}
+.media-button p {
+  margin-bottom: 0;
+}
+
+.separator-text {
+  color: rgb(64, 64, 64);
+  flex-grow: 0;
+  font-size: 14px;
+  margin: auto;
+  text-align: center;
+}
+
+.separator-line {
+  border-top: solid 2px lightgray;
+  flex-grow: 1;
+  min-width: 60px;
+}
+
+.color-primary {
+  color: rgb(64, 64, 64);
+}
+
+.password-forgotten {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.separated-text {
+  letter-spacing: 1.5px;
+}
+
+.boton-prueba {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  align-items: center;
+}
+
+#logInButton {
+  background: #3b49df !important;
+}
+#logInButton:hover {
+  background-color: #2f3ab2 !important;
+}
+
+#rememberMeCheck:checked {
+  background-color: #3b49df;
+  border-color: #3b49df;
+}/*# sourceMappingURL=login_styles.css.map */
