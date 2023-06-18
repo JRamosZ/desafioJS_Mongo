@@ -18,61 +18,80 @@ function closeMenuNav() {
 }
 closeMenuNav();
 
-/**/
-const BASE_URL2 = "https://desafiojs-1edc9-default-rtdb.firebaseio.com";
-let userId2 = "";
+// Getting data
 
-const getUserId2 = () => {
-  let params = new URLSearchParams(document.location.search);
-  userId = params.get("userId");
-  return userId;
-};
+const token = localStorage.getItem("token") || "";
+let id = (userImage = userNickName = userName = null);
+if (token !== "") {
+  const payload = token.split(".")[1];
+  const destructuracion = atob(payload);
+  id = JSON.parse(destructuracion).id;
+  userImage = JSON.parse(destructuracion).userImage;
+  userNickName = JSON.parse(destructuracion).userNickName;
+  userName = JSON.parse(destructuracion).userName;
+}
 
-const getUserData2 = async (userId) => {
-  let response = await fetch(`${BASE_URL2}/users/${userId}.json`);
-  let data = await response.json();
-  return data;
-};
+const notLogged = document.getElementById("notLoggedDiv");
+const loggedIn = document.getElementById("loggedIn");
 
-const printUserData2 = async () => {
-  let userNumber = getUserId2();
-  let data = await getUserData2(userNumber);
-  let user = document.getElementById("userDropName");
-  user.textContent = `${data.userName} ${data.userLastname}`;
-  let userNick = document.getElementById("userDropNick");
-  userNick.textContent = `@${data.userNickName}`;
-  let userProfilePicture = document.getElementById("userImgNavbar");
-  userProfilePicture.setAttribute("src", data.userImage);
-  buttonsNewPostFunctionality();
-};
-
-printUserData2();
+if (!id) {
+  notLogged.classList.add("nav_bar_conteiner_login_one");
+  loggedIn.classList.add("visually-hidden");
+} else {
+  notLogged.classList.add("visually-hidden");
+  loggedIn.classList.add("nav_bar_conteiner_login");
+}
 
 const buttonsNewPostFunctionality = () => {
   let createPostButtonList = document.querySelectorAll(".create-post");
   createPostButtonList.forEach((item) => {
     item.addEventListener("click", (event) => {
       if (window.location.pathname === "/index.html") {
-        window.location.replace(`./views/newPost.html?userId=${userId}`);
+        console.log("click");
+        window.location.replace(`./views/newPost.html`);
       } else if (window.location.pathname === "/views/index_post.html") {
         console.log("aqui");
-        window.location.replace(`./newPost.html?userId=${userId}`);
+        window.location.replace(`./newPost.html`);
       }
     });
   });
 };
 
+const printUserData2 = async () => {
+  let user = document.getElementById("userDropName");
+  user.textContent = userName;
+  let userNick = document.getElementById("userDropNick");
+  userNick.textContent = `@${userNickName}`;
+  let userProfilePicture = document.getElementById("userImgNavbar");
+  userProfilePicture.setAttribute("src", userImage);
+  buttonsNewPostFunctionality();
+};
+
+printUserData2();
+
 let indexButton = document.getElementById("indexButton");
 indexButton.addEventListener("click", () => {
-  window.location.replace(`../index.html?userId=${userId}`);
+  console.log(window.location.pathname);
+  window.location.replace(`../index.html`);
 });
 
 const signOutButton = document.getElementById("signOutButton");
 signOutButton.addEventListener("click", (event) => {
   if (window.location.pathname === "/index.html") {
+    localStorage.clear();
     window.location.replace("./views/login.html");
   } else if (window.location.pathname === "/views/index_post.html") {
-    console.log("aqui");
+    localStorage.clear();
     window.location.replace("./login.html");
   }
+});
+
+const logInButton = document.getElementById("logIn");
+logInButton.addEventListener("click", (event) => {
+  window.location.replace("./views/login.html");
+});
+
+const registerButton = document.getElementById("createAccount");
+registerButton.addEventListener("click", (event) => {
+  window.location.replace("./views/register.html");
 });
