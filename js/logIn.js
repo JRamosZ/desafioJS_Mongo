@@ -4,8 +4,6 @@ let emailInput = document.getElementById("userEmail");
 let passwordInput = document.getElementById("userPassword");
 let logInBtn = document.getElementById("logInButton");
 
-const goToHome = (key) => {};
-
 const checkForUsers = async () => {
   if (emailInput.value === "") {
     alert("El campo Email no puede estar vacío");

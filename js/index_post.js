@@ -18,13 +18,13 @@ const getUsertId = () => {
 };
 
 const getPostData = async (postId) => {
-  let response = await fetch(`${BASE_URL3}/posts/${postId}.json`); // ESTA LINEA ES LA BUENA
+  let response = await fetch(`${BASE_URL3}/posts/${postId}`); // ESTA LINEA ES LA BUENA
   let data = await response.json();
   return data;
 };
 
 const getUserData = async (UserId) => {
-  let response = await fetch(`${BASE_URL3}/users/${UserId}.json`);
+  let response = await fetch(`${BASE_URL3}/users/${UserId}`);
   let data = await response.json();
   return data;
 };
@@ -32,21 +32,21 @@ const getUserData = async (UserId) => {
 const fillAllData = async () => {
   let postId = getPostId();
   let postData = await getPostData(postId);
-  let userData = await getUserData(postData.postAuthorId);
+  let postAuthorData = await getUserData(postData["data"]["postAuthorId"]);
   let imagePost = document.getElementById("cardMainImagePost");
-  imagePost.setAttribute("src", postData.postImageURL);
+  imagePost.setAttribute("src", postData.data.postImageURL);
   let nameAutor = document.getElementById("author-name");
-  nameAutor.textContent = postData.postAuthor;
+  nameAutor.textContent = postData.data.postAuthor;
   let datePost = document.getElementById("posted-date");
-  datePost.textContent = `Posted on ${postData.postDateMonth} ${postData.postDateDay}`;
+  datePost.textContent = `Posted on ${postData.data.postDateMonth} ${postData.data.postDateDay}`;
   let textPost = document.getElementById("titlePost");
-  textPost.textContent = postData.postTitle;
+  textPost.textContent = postData.data.postTitle;
   let pageTitle = document.getElementById("pageTitle");
-  pageTitle.textContent = postData.postTitle;
+  pageTitle.textContent = postData.data.postTitle;
   let contentPost = document.getElementById("postContent");
-  contentPost.textContent = postData.postContent;
+  contentPost.textContent = postData.data.postContent;
   let authorImage = document.getElementById("authorImage");
-  authorImage.setAttribute("src", userData.userImage);
+  authorImage.setAttribute("src", postAuthorData.data.userImage);
 };
 
 fillAllData();
@@ -54,20 +54,19 @@ fillAllData();
 const fillUserCardData = async () => {
   let postId = getPostId();
   let postData = await getPostData(postId);
-  let userData = await getUserData(postData.postAuthorId);
-  console.log(userData);
+  let postAuthorData = await getUserData(postData.data.postAuthorId);
   let authorPhoto = document.getElementById("asideCard1AuthorImg");
-  authorPhoto.setAttribute("src", userData.userImage);
+  authorPhoto.setAttribute("src", postAuthorData.data.userImage);
   let authorPostName = document.getElementById("asideCard1AuthorName");
-  authorPostName.textContent = `${userData.userName} ${userData.userLastname}`;
+  authorPostName.textContent = `${postAuthorData.data.userName} ${postAuthorData.data.userLastname}`;
   let authordescription = document.getElementById("asideCard1Description");
-  authordescription.textContent = userData.userdescription;
+  authordescription.textContent = postAuthorData.data.userdescription;
   let authorLocation = document.getElementById("asideCard1Location");
-  authorLocation.textContent = userData.userLocation;
+  authorLocation.textContent = postAuthorData.data.userLocation;
   let authorEducation = document.getElementById("asideCard1Education");
-  authorEducation.textContent = userData.userEducation;
+  authorEducation.textContent = postAuthorData.data.userEducation;
   let authorDateJoined = document.getElementById("asideCard1Joined");
-  authorDateJoined.textContent = userData.userJoined;
+  authorDateJoined.textContent = postAuthorData.data.userJoined;
 };
 
 fillUserCardData();
@@ -97,10 +96,7 @@ const createCard2Aside = (userPost, postKey) => {
   divTags.classList.add("gap-3");
   let anchor = document.createElement("a");
   user = userId;
-  anchor.setAttribute(
-    "href",
-    `index_post.html?userId=${user}&postId=${postKey}`
-  );
+  anchor.setAttribute("href", `index_post.html?postId=${postKey}`);
   anchor.classList.add("aside-card2__anchor2");
 
   anchor.appendChild(paragraph1);
@@ -115,7 +111,7 @@ const createCard2Aside = (userPost, postKey) => {
 };
 
 const getAllPosts = async () => {
-  let response = await fetch(`${BASE_URL3}/posts/.json`);
+  let response = await fetch(`${BASE_URL3}/posts/`);
   let postsData = await response.json();
   return postsData;
 };
@@ -125,12 +121,12 @@ const printAllAnchors = async () => {
   let asideCard2Author = document.getElementById("asideCard2Author");
   let postId = getPostId();
   let postData = await getPostData(postId);
-  asideCard2Author.textContent = postData.postAuthor;
-  for (key in allPosts) {
-    if (postData.postAuthor === allPosts[key].postAuthor) {
-      if (key != postId) {
-        let response = allPosts[key];
-        let card = createCard2Aside(response, key);
+  asideCard2Author.textContent = postData.data.postAuthor;
+  for (key in allPosts.data) {
+    if (postData.data.postAuthor === allPosts.data[key].postAuthor) {
+      if (allPosts.data[key]._id !== postId) {
+        let response = allPosts.data[key];
+        let card = createCard2Aside(response, allPosts.data[key]._id);
         asideCard2.appendChild(card);
       }
     }
