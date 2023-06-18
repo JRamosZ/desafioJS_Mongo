@@ -1,33 +1,56 @@
-const BASE_URL3 = 'https://desafiojs-1edc9-default-rtdb.firebaseio.com/'
+const BASE_URL3 = "http://localhost:8080";
 
-let emailInput = document.getElementById('userEmail')
-let passwordInput = document.getElementById('userPassword')
-let logInButton = document.getElementById('logInButton')
-
-const goToHome = (key) => {
-    window.location.replace(`./index.html?userId=${key}`)
-}
+let emailInput = document.getElementById("userEmail");
+let passwordInput = document.getElementById("userPassword");
+let logInBtn = document.getElementById("logInButton");
 
 const checkForUsers = async () => {
-    if (emailInput.value === '') {
-        alert('El campo Email no puede estar vacío')
-        return
-    } else if (passwordInput.value === '') {
-        alert('El campo Password no puede estar vacío')
-        return
-    }
-    
-    let response = await fetch(`${BASE_URL3}/users/.json`)
-    let data = await response.json()
-    for (let item in data) {
-        if (data[item]['userEmail'] === emailInput.value && data[item]['userPassword'] === passwordInput.value) {
-            goToHome(item)
-            return
-        }
-    }
-    alert('Correo o Contraseña incorrectos')
-}
+  if (emailInput.value === "") {
+    alert("El campo Email no puede estar vacío");
+    return;
+  } else if (passwordInput.value === "") {
+    alert("El campo Password no puede estar vacío");
+    return;
+  }
+  const body = {
+    email: emailInput.value,
+    password: passwordInput.value,
+  };
+  let response = await fetch(`${BASE_URL3}/auth`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  let data = await response.json();
+  if (!data.success) {
+    alert("No pudimos iniciar sesion");
+    return;
+  }
 
-logInButton.addEventListener('click', event => {
-    checkForUsers()
-})
+  alert("Haz iniciado sesion");
+
+  // Guardamos token en el local storage;
+  localStorage.setItem("token", data.token);
+
+  //   Redirigimos a inicio
+  window.location.replace(`../index.html`);
+};
+
+logInBtn.addEventListener("click", (event) => {
+  checkForUsers();
+});
+
+const logInButton = document.getElementById("logIn");
+logInButton.addEventListener("click", (event) => {
+  window.location.replace("./login.html");
+});
+
+const registerButton = document.getElementById("createAccount");
+registerButton.addEventListener("click", (event) => {
+  window.location.replace("./register.html");
+});
+
+const indexButton = document.getElementById("indexButton");
+indexButton.addEventListener("click", (event) => {
+  window.location.replace("../index.html");
+});

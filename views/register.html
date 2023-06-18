@@ -22,7 +22,7 @@
             </label>  
         </div>  
         <div class="nav_bar_conteiner_login">
-          <button id='logIn' class="lod_in_log button__post btn btn-outline-primary" type="submit"><b>Log in</b></button>
+          <button id="logIn" class="lod_in_log button__post btn btn-outline-primary" type="submit"><b>Log in</b></button>
           <button id="createAccount" class="create_post_log button__post btn btn-outline-primary" type="submit"><b>Create account</b></button>
         </div>
     </div>
@@ -60,24 +60,39 @@
                                 <p class="separator-text">Have a password? Continue with your email address</p>
                                 <div class="separator-line"></div>
                             </div>
+                            <div class="d-flex justify-content-between">
+
+                            </div>
+
+                            <div class="d-flex justify-content-between gap-4">
+                                <div class="mb-3 w-50">
+                                    <label for="userName" class="form-label">Name</label>
+                                    <input name='Name' type="text" id="userName" class="form-control">
+                                </div>
+                                <div class="mb-3 w-50">
+                                    <label for="userLastname" class="form-label">Lastname</label>
+                                    <input name='Lastname' type="text" id="userLastname" class="form-control">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userImage" class="form-label">Image URL</label>
+                                <input name='Image URL' type="text" id="userImage" class="form-control">
+                            </div>
                             <div class="mb-3">
                                 <label for="userEmail" class="form-label">Email</label>
-                                <input type="text" id="userEmail" class="form-control">
+                                <input name='Email' type="text" id="userEmail" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="userPassword" class="form-label">Password</label>
-                                <input type="password" id="userPassword" class="form-control">
+                                <input name='Password' type="password" id="userPassword" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rememberMeCheck" checked>
-                                    <label class="form-check-label" for="rememberMeCheck">Remember me</label>
-                                </div>
+                                <label for="repeatPassword" class="form-label">Repeat Password</label>
+                                <input name='Repeat Password' type="password" id="repeatPassword" class="form-control">
                             </div>
-                            <button id='logInButton' type="button" class="btn btn-primary w-100 media-button mb-4">Continue</button>
-                            <div class="text-center">
-                                <a class="mb-5 password-forgotten" href="">I forgot my password</a>
-                            </div>
+
+                            <button id='registerButton' type="button" class="btn btn-primary w-100 media-button mb-4">Register</button>
+
                         </fieldset>
                     </form>
                 </content>
@@ -99,7 +114,8 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="../js/logIn.js"></script>
+    <script src="../js/register.js"></script>
+    <!-- <script src="../js/navBar.js"></script> -->
 </body>
 </body>
 </html>

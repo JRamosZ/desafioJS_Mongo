@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="../assets/favicon.webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="../css/style_main.css">
+    <link rel="stylesheet" href="./css/style_main.css">
 </head>
 <body>
   <header class="header-container container-fluid">
@@ -20,10 +20,10 @@
                 <input class="nav_bar_search card-filter" type="search" placeholder=" Search...">
             </label>  
         </div>  
-        <div class="nav_bar_conteiner_login">
+        <div id="loggedIn" class="">
             <button class="create-post button__post btn btn-outline-primary" type="button"><b>Create Post</b></button>
             <img class="icon__campaign" src="/assets/img_navbar/icon campaign.svg" alt=""/>
-            <!-- <button type="button" class="login__icon" id="login_icon_open"><img src="/assets/img_navbar/icon login.svg" alt=""></button> -->
+            <!-- <button type="button"  visually-hidden class="login__icon" id="login_icon_open"><img src="/assets/img_navbar/icon login.svg" alt=""></button> -->
             <button type="button" class="login__icon btn dropdown-item shadow-large rounded pe-2 ps-2 mg-0" data-bs-toggle="dropdown" aria-expanded="false" id="login_icon_open">
               <img
                   id="userImgNavbar" src="/assets/img_navbar/icon login.svg" alt="">
@@ -36,6 +36,11 @@
               <li><button id='signOutButton' class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded" type="button">Sign Out</a></button></li>
           </ul>
         </div>
+        <div id="notLoggedDiv" class="">
+          <button id="logIn" class="lod_in_log button__post btn btn-outline-primary" type="submit"><b>Log in</b></button>
+          <button id="createAccount" class="create_post_log button__post btn btn-outline-primary" type="submit"><b>Create account</b></button>
+        </div>
+    </div>
     </div>
   </header>
     
@@ -101,7 +106,7 @@
                 <content class="col-12 col-md-8 col-xl-6">
                   <div class="buttonName pb-2">
                     <button id="relevantButton" type="button" class="btn border-0 relevantButtonStyle">Relevant </button>
-                    <button id="latestButton" type="button" class="btn border-0 relevantButtonStyle">Lastest</button>
+                    <button id="latestButton" type="button" class="btn border-0 relevantButtonStyle">Latest</button>
                     <button id="topButton" type="button" class="btn border-0 relevantButtonStyle">Top</button>
                   </div>
                   <div class="post-card" id="postCard" >
@@ -189,7 +194,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="../js/navBar.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="js/navBar.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
