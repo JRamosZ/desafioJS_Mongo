@@ -595,6 +595,10 @@ width: 100%;
     }
 }
 //*navbar login view*//
+.nav_bar_conteiner_login_one{
+    display: flex;
+    gap: .5rem;
+}
 .lod_in_log{
     background: none;
     border: none;
@@ -608,7 +612,8 @@ width: 100%;
     color: rgb(104, 104, 252);
 }
 .create_post_log{
-    width: 9rem;
+    width: 8.5rem;
+    font-weight: 400;
 }
 //* *//
 .all-icons a:hover{
@@ -713,3 +718,4 @@ font-size: 12px;
         border: thin solid 3px lightgrey;
     }
 }
+
