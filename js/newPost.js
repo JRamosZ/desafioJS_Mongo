@@ -4,7 +4,7 @@ const tooltipTriggerList = document.querySelectorAll(
 const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
 );
-const BASE_URL = "https://desafiojs-1edc9-default-rtdb.firebaseio.com";
+const BASE_URL = "htt://localhost:8080";
 let userId = "";
 
 let textBlock1 = document.getElementById("popText1");

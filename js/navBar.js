@@ -31,17 +31,6 @@ if (token !== "") {
   userName = JSON.parse(destructuracion).userName;
 }
 
-const notLogged = document.getElementById("notLoggedDiv");
-const loggedIn = document.getElementById("loggedIn");
-
-if (!id) {
-  notLogged.classList.add("nav_bar_conteiner_login_one");
-  loggedIn.classList.add("visually-hidden");
-} else {
-  notLogged.classList.add("visually-hidden");
-  loggedIn.classList.add("nav_bar_conteiner_login");
-}
-
 const buttonsNewPostFunctionality = () => {
   let createPostButtonList = document.querySelectorAll(".create-post");
   createPostButtonList.forEach((item) => {
@@ -67,7 +56,18 @@ const printUserData2 = async () => {
   buttonsNewPostFunctionality();
 };
 
-printUserData2();
+const notLogged = document.getElementById("notLoggedDiv");
+const loggedIn = document.getElementById("loggedIn");
+
+if (!id) {
+  notLogged.classList.add("nav_bar_conteiner_login_one");
+  loggedIn.classList.add("visually-hidden");
+} else {
+  printUserData2();
+  notLogged.classList.add("visually-hidden");
+  loggedIn.classList.add("nav_bar_conteiner_login");
+}
+// printUserData2();
 
 let indexButton = document.getElementById("indexButton");
 indexButton.addEventListener("click", () => {
