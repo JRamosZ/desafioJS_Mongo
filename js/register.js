@@ -2,7 +2,6 @@ const BASE_URL4 = "http://localhost:8080";
 
 const dataValidation = async () => {
   let inputs = document.querySelectorAll("form input");
-  console.log(inputs);
   for (let i = 0; i < inputs.length; i++) {
     if (inputs[i].value === "") {
       alert(`El campo ${inputs[i].name} no puede estar vacío`);

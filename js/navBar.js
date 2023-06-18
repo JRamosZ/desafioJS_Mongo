@@ -36,10 +36,8 @@ const buttonsNewPostFunctionality = () => {
   createPostButtonList.forEach((item) => {
     item.addEventListener("click", (event) => {
       if (window.location.pathname === "/index.html") {
-        console.log("click");
         window.location.replace(`./views/newPost.html`);
       } else if (window.location.pathname === "/views/index_post.html") {
-        console.log("aqui");
         window.location.replace(`./newPost.html`);
       }
     });
@@ -71,7 +69,6 @@ if (!id) {
 
 let indexButton = document.getElementById("indexButton");
 indexButton.addEventListener("click", () => {
-  console.log(window.location.pathname);
   window.location.replace(`../index.html`);
 });
 
