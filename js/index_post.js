@@ -1,4 +1,4 @@
-const BASE_URL3 = "https://desafiojs-1edc9-default-rtdb.firebaseio.com";
+const BASE_URL3 = "http://localhost:8080";
 let userId = "";
 
 const getPostId = () => {

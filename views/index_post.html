@@ -21,7 +21,7 @@
                     <input class="nav_bar_search" type="search" placeholder=" Search...">
                 </label>  
             </div>  
-            <div class="nav_bar_conteiner_login">
+            <div id="loggedIn" class="">
                 <button class="create-post button__post btn btn-outline-primary" type="submit"><b>Create Post</b></button>
                 <!-- <img class="icon__campaign" src="/assets/img_navbar/icon campaign.svg" alt=""/>
                 <button type="button" class="login__icon" id="login_icon_open"><img src="/assets/img_navbar/icon login.svg" alt=""></button> -->
@@ -36,6 +36,10 @@
                     <li><button id="signOutButton" class="dropdown-item d-flex justify-content-between pt-2 pb-2 rounded" type="button">Sign Out</a></button></li>
                 </ul>
             </div>
+            <div id="notLoggedDiv" class="">
+                <button id="logIn" class="lod_in_log button__post btn btn-outline-primary" type="submit"><b>Log in</b></button>
+                <button id="createAccount" class="create_post_log button__post btn btn-outline-primary" type="submit"><b>Create account</b></button>
+              </div>
         </div>
     </header>
     <main class="main-container container-lg">

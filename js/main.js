@@ -1,30 +1,15 @@
-const BASE_URL = "https://desafiojs-1edc9-default-rtdb.firebaseio.com";
-let userId = "";
+const BASE_URL = "http://localhost:8080";
 let allPosts = [];
-
-const getUsertId = () => {
-  let params = new URLSearchParams(document.location.search);
-  userId = params.get("userId");
-  if (userId === null) {
-    window.location.replace("./views/login.html");
-  }
-};
 
 const getAllPosts = async () => {
   let i = 0;
-  let response = await fetch(`${BASE_URL}/posts/.json`);
-  postsList = await response.json();
-  for (key in postsList) {
-    allPosts.push(postsList[key]);
-    allPosts[i]["postKey"] = key;
-    i++;
-  }
+  let response = await fetch(`${BASE_URL}/posts/`);
+  let responseObject = await response.json();
+  allPosts = responseObject.data;
 };
 
 const getAuthorData = async (authorId) => {
-  let author = await fetch(
-    `https://desafiojs-1edc9-default-rtdb.firebaseio.com/users/${authorId}/.json`
-  );
+  let author = await fetch(`${BASE_URL}/users/${authorId}`);
   let authorData = await author.json();
   return authorData;
 };
@@ -32,12 +17,11 @@ const getAuthorData = async (authorId) => {
 const insertAutorData = async () => {
   for (post in allPosts) {
     let postAuthor = await getAuthorData(allPosts[post]["postAuthorId"]);
-    allPosts[post]["postAuthorImage"] = await postAuthor["userImage"];
+    allPosts[post]["postAuthorImage"] = postAuthor["data"]["userImage"];
   }
 };
 
 const starterFunction = async () => {
-  getUsertId();
   await getAllPosts();
   await insertAutorData();
   printAllPostsRelevant("postCard");
@@ -92,11 +76,7 @@ const createCard = (post) => {
 
   let aTitle = document.createElement("a");
   aTitle.classList.add("ms-5", "h4", "textPointer");
-  user = userId;
-  aTitle.setAttribute(
-    "href",
-    `./views/index_post.html?userId=${user}&postId=${postKey}`
-  );
+  aTitle.setAttribute("href", `./views/index_post.html?postId=${post["_id"]}`);
   titleText = document.createTextNode(postTitle);
   aTitle.appendChild(titleText);
 
@@ -268,11 +248,9 @@ const printAllPostsRelevant = (listtId) => {
   while (list.firstChild) {
     list.removeChild(list.firstChild);
   }
-
   relevantList.sort(function (a, b) {
     return b.postRelevance - a.postRelevance;
   });
-
   relevantList.forEach((item) => {
     let card = createCard(item);
     list.appendChild(card);
@@ -347,7 +325,7 @@ const getRelevantLatest = () => {
   relevantLatestTitle.textContent = relevantList[0]["postTitle"];
   relevantLatestTitle.setAttribute(
     "href",
-    `index_post.html?userId=${userId}&postId=${relevantList[0]["postKey"]}`
+    `./views/index_post.html?postId=${relevantList[0]["_id"]}`
   );
   let relevantLatestContent = document.getElementById("relevantLatestContent");
   let wordsListToAdd = relevantList[0]["postContent"].slice(0, 160) + "...";
@@ -359,13 +337,13 @@ const getRelevantLatest = () => {
 // Hashtags
 
 const getHashtagPosts = async (hashtag) => {
-  let response = await fetch(`${BASE_URL}/posts/.json`);
+  let response = await fetch(`${BASE_URL}/posts/`);
   let postsData = await response.json();
   let postsList = {};
-  for (key in postsData) {
-    for (tag in postsData[key]["postTags"]) {
-      if (postsData[key]["postTags"][tag] === hashtag) {
-        postsList[key] = postsData[key];
+  for (key in postsData.data) {
+    for (tag in postsData.data[key]["postTags"]) {
+      if (postsData.data[key]["postTags"][tag] === hashtag) {
+        postsList[key] = postsData.data[key];
       }
     }
   }
@@ -376,10 +354,10 @@ const createHashtagsItems = async () => {
   let hashtagsList1 = await getHashtagPosts("code");
   let hashtagsList2 = await getHashtagPosts("development");
   for (key in hashtagsList1) {
-    createHashtag(hashtagsList1[key], key, "hashList1");
+    createHashtag(hashtagsList1[key], hashtagsList1[key]["_id"], "hashList1");
   }
   for (key in hashtagsList2) {
-    createHashtag(hashtagsList2[key], key, "hashList2");
+    createHashtag(hashtagsList2[key], hashtagsList2[key]["_id"], "hashList2");
   }
 };
 
@@ -387,7 +365,7 @@ const createHashtag = (post, key, fatherId) => {
   let liHash = document.createElement("li");
   liHash.classList.add("list-group-item", "py-3");
   let aHash = document.createElement("a");
-  aHash.setAttribute("href", `index_post.html?userId=${userId}&postId=${key}`);
+  aHash.setAttribute("href", `./views/index_post.html?postId=${key}`);
   let textHash = document.createTextNode(post.postTitle);
   aHash.appendChild(textHash);
   liHash.appendChild(aHash);
