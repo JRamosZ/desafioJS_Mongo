@@ -62,7 +62,6 @@ const getNewPostInputs = async () => {
   let data = await getUserData(userKey);
   post["postAuthor"] = `${data.userName} ${data.userLastname}`;
   post["postAuthorId"] = userKey;
-  console.log(post);
   return post;
 };
 
@@ -73,7 +72,6 @@ const saveNewPost = async (post) => {
   });
 
   let data = await response.json();
-  console.log(data);
   return data;
 };
 
@@ -94,7 +92,6 @@ const getUserId = () => {
 const getUserData = async (userId) => {
   let response = await fetch(`${BASE_URL}/users/${userId}.json`);
   let data = await response.json();
-  console.log(data);
   return data;
 };
 
