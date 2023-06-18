@@ -667,6 +667,11 @@ body {
     display: block;
   }
 }
+.nav_bar_conteiner_login_one {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .lod_in_log {
   background: none;
   border: none;
@@ -682,7 +687,8 @@ body {
 }
 
 .create_post_log {
-  width: 9rem;
+  width: 8.5rem;
+  font-weight: 400;
 }
 
 .all-icons a:hover {
