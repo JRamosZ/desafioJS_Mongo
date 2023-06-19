@@ -1,5 +1,5 @@
 const BASE_URL3 = "http://localhost:8080";
-let userId = "";
+userId = "";
 
 const getPostId = () => {
   let params = new URLSearchParams(document.location.search);
@@ -7,16 +7,23 @@ const getPostId = () => {
   return postId;
 };
 
-const getUsertId = () => {
-  let params = new URLSearchParams(document.location.search);
-  userId = params.get("userId");
-  if (userId === null) {
-    window.location.replace(`./views/login.html`);
-  } else {
-    return userId;
-  }
-};
+// const getUsertId = () => {
+//   let params = new URLSearchParams(document.location.search);
+//   userId = params.get("userId");
+//   if (userId === null) {
+//     window.location.replace(`./views/login.html`);
+//   } else {
+//     return userId;
+//   }
+// };
+const tokenUser = localStorage.getItem("token") || "";
+const payloadUser = tokenUser.split(".")[1];
 
+let userIdToken = "";
+if (payloadUser) {
+  userIdToken = JSON.parse(atob(payloadUser)).id; // atob
+}
+console.log(userIdToken);
 const getPostData = async (postId) => {
   let response = await fetch(`${BASE_URL3}/posts/${postId}`); // ESTA LINEA ES LA BUENA
   let data = await response.json();
@@ -47,6 +54,28 @@ const fillAllData = async () => {
   contentPost.textContent = postData.data.postContent;
   let authorImage = document.getElementById("authorImage");
   authorImage.setAttribute("src", postAuthorData.data.userImage);
+
+  if (userIdToken === postAuthorData.data._id) {
+    let btnContainer = document.getElementById("btnContainer");
+    btnContainer.classList.remove("visually-hidden");
+
+    document
+      .getElementById("btnDelete")
+      .addEventListener("click", async (event) => {
+        let response = await fetch(`${BASE_URL3}/posts/${postData.data._id}`, {
+          method: "DELETE",
+          headers: { authorization: `Bearer ${tokenUser}` },
+        });
+        let data = await response.json();
+        console.log(data);
+        if (data.success) {
+          alert("Post Eliminado con éxito");
+          window.location.replace("../index.html");
+        } else {
+          alert("Post No eliminado");
+        }
+      });
+  }
 };
 
 fillAllData();
