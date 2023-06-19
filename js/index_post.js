@@ -103,11 +103,6 @@ const createCard2Aside = (userPost, postKey) => {
   anchor.appendChild(divTags);
 
   return anchor;
-
-  // let asideCard2 = document.getElementById("asideCard2")
-  // asideCard2.appendChild(anchor)
-  // console.log(asideCard2)
-  // return asideCard2
 };
 
 const getAllPosts = async () => {

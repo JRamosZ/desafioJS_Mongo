@@ -4,8 +4,12 @@ const tooltipTriggerList = document.querySelectorAll(
 const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
 );
-const BASE_URL = "htt://localhost:8080";
-let userId = "";
+const BASE_URL = "http://localhost:8080";
+const token = localStorage.getItem("token") || "";
+const payload = token.split(".")[1];
+const destructuracion = atob(payload);
+const userId = JSON.parse(atob(payload)).id; // atob
+const userName = JSON.parse(atob(payload)).userName;
 
 let textBlock1 = document.getElementById("popText1");
 let textBlock2 = document.getElementById("popText2");
@@ -57,23 +61,28 @@ const getNewPostInputs = async () => {
 
   let relevance = Math.ceil(Math.random() * 10);
   post["postRelevance"] = relevance;
-
-  let userKey = getUserId();
-  let data = await getUserData(userKey);
-  post["postAuthor"] = `${data.userName} ${data.userLastname}`;
-  post["postAuthorId"] = userKey;
-  console.log(post);
+  post["postAuthor"] = userName;
+  post["postAuthorId"] = userId;
   return post;
 };
 
 const saveNewPost = async (post) => {
-  let response = await fetch(`${BASE_URL}/posts/.json`, {
+  let response = await fetch(`${BASE_URL}/posts`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(post),
   });
 
   let data = await response.json();
-  console.log(data);
+  if (data.success) {
+    alert("Post guardado con éxito");
+    window.location.replace(`../index.html`);
+  } else {
+    alert("Post no guardado, intenta nuevamente");
+  }
   return data;
 };
 
@@ -81,31 +90,14 @@ let publishButton = document.getElementById("publishButton");
 publishButton.addEventListener("click", async (event) => {
   let post = await getNewPostInputs();
   post ? saveNewPost(post) : null;
-  alert("Post guardado con éxito");
-  window.location.replace(`../index.html?userId=${userId}`);
 });
-
-const getUserId = () => {
-  let params = new URLSearchParams(document.location.search);
-  userId = params.get("userId");
-  return userId;
-};
-
-const getUserData = async (userId) => {
-  let response = await fetch(`${BASE_URL}/users/${userId}.json`);
-  let data = await response.json();
-  console.log(data);
-  return data;
-};
 
 let indexButton = document.getElementById("indexButton");
 indexButton.addEventListener("click", () => {
-  window.location.replace(`../index.html?userId=${userId}`);
+  window.location.replace(`../index.html`);
 });
 
 let closeNewPost = document.getElementById("closeNewPost");
 closeNewPost.addEventListener("click", () => {
-  window.location.replace(`../index.html?userId=${userId}`);
+  window.location.replace(`../index.html`);
 });
-
-getUserId();
