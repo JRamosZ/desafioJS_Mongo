@@ -33,6 +33,45 @@ document.getElementById("postContent").addEventListener("click", () => {
   textBlock3.classList = [];
 });
 
+let postId = "";
+
+const getPostData = async (postId) => {
+  let response = await fetch(`${BASE_URL}/posts/${postId}`); // ESTA LINEA ES LA BUENA
+  let data = await response.json();
+  return data;
+};
+const getPostId = () => {
+  let params = new URLSearchParams(document.location.search);
+  postId = params.get("postId");
+  return postId;
+};
+
+const verifyEdit = async () => {
+  const postEdit = getPostId();
+  if (postEdit) {
+    const data = await getPostData(postEdit);
+    const url = document.querySelector("#postImageURL");
+    const postReadTime = document.querySelector("#postReadTime");
+    const postTitle = document.querySelector("#postTitle");
+    const postTags = document.querySelector("#postTags");
+    const postContent = document.querySelector("#postContent");
+
+    console.log(data);
+    url.value = data.data.postImageURL;
+    console.log(url);
+    postReadTime.value = data.data.postReadTime;
+    postTitle.value = data.data.postTitle;
+    postTags.value = data.data.postTags.join(" ");
+    postContent.textContent = data.data.postContent;
+
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const isEdit = verifyEdit();
+
 const getNewPostInputs = async () => {
   let post = {};
   let inputs = document.querySelectorAll("input");
@@ -67,14 +106,26 @@ const getNewPostInputs = async () => {
 };
 
 const saveNewPost = async (post) => {
-  let response = await fetch(`${BASE_URL}/posts`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(post),
-  });
+  let response = "";
+  if (isEdit) {
+    response = await fetch(`${BASE_URL}/posts/${postId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(post),
+    });
+  } else {
+    response = await fetch(`${BASE_URL}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(post),
+    });
+  }
 
   let data = await response.json();
   if (data.success) {

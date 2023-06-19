@@ -7,15 +7,6 @@ const getPostId = () => {
   return postId;
 };
 
-// const getUsertId = () => {
-//   let params = new URLSearchParams(document.location.search);
-//   userId = params.get("userId");
-//   if (userId === null) {
-//     window.location.replace(`./views/login.html`);
-//   } else {
-//     return userId;
-//   }
-// };
 const tokenUser = localStorage.getItem("token") || "";
 const payloadUser = tokenUser.split(".")[1];
 
@@ -75,6 +66,10 @@ const fillAllData = async () => {
           alert("Post No eliminado");
         }
       });
+
+    document.getElementById("btnEdit").addEventListener("click", (event) => {
+      window.location.replace(`./newPost.html?postId=${postId}`);
+    });
   }
 };
 
