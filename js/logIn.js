@@ -6,10 +6,18 @@ let logInBtn = document.getElementById("logInButton");
 
 const checkForUsers = async () => {
   if (emailInput.value === "") {
-    alert("El campo Email no puede estar vacío");
+    // alert("El campo Email no puede estar vacío");
+    Swal.fire({
+      title: "El campo Email no puede estar vacío",
+      icon: "warning",
+    });
     return;
   } else if (passwordInput.value === "") {
-    alert("El campo Password no puede estar vacío");
+    // alert("El campo Password no puede estar vacío");
+    Swal.fire({
+      title: "El campo Password no puede estar vacío",
+      icon: "warning",
+    });
     return;
   }
   const body = {
@@ -23,11 +31,21 @@ const checkForUsers = async () => {
   });
   let data = await response.json();
   if (!data.success) {
-    alert("No pudimos iniciar sesion");
+    // alert("No pudimos iniciar sesion");
+    Swal.fire({
+      title: "No pudimos iniciar sesion",
+      icon: "error",
+    });
     return;
+  } else {
+    await Swal.fire({
+      title: "Bienvenido",
+      icon: "success",
+      timer: 1500,
+    });
   }
 
-  alert("Haz iniciado sesion");
+  //alert("Haz iniciado sesion");
 
   // Guardamos token en el local storage;
   localStorage.setItem("token", data.token);
