@@ -75,8 +75,14 @@ const dataValidation = async () => {
       icon: "error",
     });
     return;
+  } else {
+    await Swal.fire({
+      title: "Usuario Registrado",
+      icon: "success",
+      timer: 1500,
+    });
   }
-  alert("Usuario Registrado");
+  // alert("Usuario Registrado");
   const logInBody = {
     email: body.userEmail,
     password: body.userPassword,
@@ -90,7 +96,7 @@ const dataValidation = async () => {
   if (!data2.success) {
     //alert("No pudimos iniciar sesion");
     Swal.fire({
-      title: "No pudimos iniciar sesion",
+      title: "No pudimos iniciar sesión",
       icon: "error",
     });
     window.location.replace(`./login.html`);
