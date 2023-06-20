@@ -268,7 +268,7 @@ if (tokenUser === "") {
     let commentData = getCommentData();
     if (commentData) {
       let postId = getPostId();
-      let response = await fetch(`${BASE_URL3}/complements/${postId}`, {
+      let response = await fetch(`${BASE_URL3}/posts/${postId}/comments`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -288,3 +288,8 @@ if (tokenUser === "") {
     }
   });
 }
+
+// Funcionalidad Extra [Flujo de likes]
+
+let likeButtonAdd = document.getElementById("likeButtonAdd")
+let counterLikeButtonAdd = document.getElementById("counterLikeButtonAdd")
