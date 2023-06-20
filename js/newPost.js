@@ -56,9 +56,7 @@ const verifyEdit = async () => {
     const postTags = document.querySelector("#postTags");
     const postContent = document.querySelector("#postContent");
 
-    console.log(data);
     url.value = data.data.postImageURL;
-    console.log(url);
     postReadTime.value = data.data.postReadTime;
     postTitle.value = data.data.postTitle;
     postTags.value = data.data.postTags.join(" ");
@@ -70,7 +68,12 @@ const verifyEdit = async () => {
   }
 };
 
-const isEdit = verifyEdit();
+let isEdit = "";
+const starterFunction = async () => {
+  isEdit = await verifyEdit();
+};
+// const isEdit = verifyEdit();
+starterFunction();
 
 const getNewPostInputs = async () => {
   let post = {};
@@ -111,7 +114,7 @@ const getNewPostInputs = async () => {
 
 const saveNewPost = async (post) => {
   let response = "";
-  if (isEdit) {
+  if (isEdit === true) {
     response = await fetch(`${BASE_URL}/posts/${postId}`, {
       method: "PATCH",
       headers: {
@@ -120,7 +123,7 @@ const saveNewPost = async (post) => {
       },
       body: JSON.stringify(post),
     });
-  } else {
+  } else if (!isEdit) {
     response = await fetch(`${BASE_URL}/posts`, {
       method: "POST",
       headers: {
