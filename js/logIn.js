@@ -41,7 +41,7 @@ const checkForUsers = async () => {
     await Swal.fire({
       title: "Bienvenido",
       icon: "success",
-      timer: 1500,
+      //timer: 1500,
     });
   }
 
