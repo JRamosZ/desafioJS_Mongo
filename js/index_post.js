@@ -1,7 +1,6 @@
 const BASE_URL3 = "http://localhost:8080";
 userId = "";
 
-
 const getPostId = () => {
   let params = new URLSearchParams(document.location.search);
   postId = params.get("postId");
@@ -45,11 +44,14 @@ const fillAllData = async () => {
   contentPost.textContent = postData.data.postContent;
   let authorImage = document.getElementById("authorImage");
   authorImage.setAttribute("src", postAuthorData.data.userImage);
-  let dropdownMenuButton1 = document.getElementById("dropdownMenuButton1")
-  dropdownMenuButton1.textContent = `Top comments (${postData.data.postComments.length})`
-  if(tokenUser !== ""){
+  let dropdownMenuButton1 = document.getElementById("dropdownMenuButton1");
+  dropdownMenuButton1.textContent = `Top comments (${postData.data.postComments.length})`;
+  if (tokenUser !== "") {
     let commentTextAreaImg = document.getElementById("commentTextAreaImg");
-    commentTextAreaImg.setAttribute("src", JSON.parse(atob(payloadUser)).userImage);
+    commentTextAreaImg.setAttribute(
+      "src",
+      JSON.parse(atob(payloadUser)).userImage
+    );
   }
   if (userIdToken === postAuthorData.data._id) {
     let btnContainer = document.getElementById("btnContainer");
@@ -63,7 +65,6 @@ const fillAllData = async () => {
           headers: { authorization: `Bearer ${tokenUser}` },
         });
         let data = await response.json();
-        console.log(data);
         if (data.success) {
           //alert("Post Eliminado con éxito");
           await Swal.fire({
@@ -87,9 +88,9 @@ const fillAllData = async () => {
     });
   }
   let commentFrame = "";
-  for (index in postData.data.postComments){
-    commentFrame += 
-  `<div class="comments__comment">
+  postData.data.postComments = postData.data.postComments.reverse();
+  for (let index in postData.data.postComments) {
+    commentFrame += `<div class="comments__comment">
     <div class="comments__comment__profile">
         <button class="b3">
             <img src="${postData.data.postComments[index].commentAuthorImg}" alt="">
@@ -126,11 +127,9 @@ const fillAllData = async () => {
             <button><p><img src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png" alt=""> Reply</p></button>
         </div>
     </div>
-  </div>`
-  let divPostComments = document.getElementById("postComments")
-  console.log(divPostComments)
-  divPostComments.innerHTML = commentFrame
-  console.log(divPostComments)
+  </div>`;
+    let divPostComments = document.getElementById("postComments");
+    divPostComments.innerHTML = commentFrame;
   }
 };
 
@@ -245,47 +244,47 @@ closeMenuNavPost();
 // Funcionalidad Extra [Flujo de comentarios]
 
 const getCommentData = () => {
-  let commentContent = document.getElementById("commentContent").value
-  if (commentContent === ""){
-    return false
+  let commentContent = document.getElementById("commentContent").value;
+  if (commentContent === "") {
+    return false;
   } else {
     let commentData = {
-        commentAuthorId: JSON.parse(atob(payloadUser)).id,
-        commentAuthorImg: JSON.parse(atob(payloadUser)).userImage,
-        commentAuthorName: JSON.parse(atob(payloadUser)).userName,
-        commentDate: new Date().toDateString(),
-        commentText: commentContent,
-    }
-    return commentData
+      commentAuthorId: JSON.parse(atob(payloadUser)).id,
+      commentAuthorImg: JSON.parse(atob(payloadUser)).userImage,
+      commentAuthorName: JSON.parse(atob(payloadUser)).userName,
+      commentDate: new Date().toDateString(),
+      commentText: commentContent,
+    };
+    return commentData;
   }
-}
+};
 
-if(tokenUser === ""){
+if (tokenUser === "") {
   let commentTextArea = document.getElementById("commentTextArea");
-  commentTextArea.classList.add("visually-hidden")
+  commentTextArea.classList.add("visually-hidden");
 } else {
   let commentSubmit = document.getElementById("commentSubmit");
-  commentSubmit.addEventListener("click", async ()=>{
-    let commentData = getCommentData()
-    if(commentData){
+  commentSubmit.addEventListener("click", async () => {
+    let commentData = getCommentData();
+    if (commentData) {
       let postId = getPostId();
-      console.log(tokenUser)
       let response = await fetch(`${BASE_URL3}/complements/${postId}`, {
         method: "PATCH",
-        headers : { 
+        headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenUser}`},
-          body: JSON.stringify(commentData),
+          Authorization: `Bearer ${tokenUser}`,
+        },
+        body: JSON.stringify(commentData),
       });
       let postsData = await response.json();
-      if(postsData.success){
-        window.location.replace(`./index_post.html?postId=${postId}`)
+      if (postsData.success) {
+        window.location.replace(`./index_post.html?postId=${postId}`);
       } else {
         Swal.fire({
-          title: "Error al subir el comentarior",
+          title: "Error al subir el comentario",
           icon: "error",
         });
       }
     }
-  })
+  });
 }
