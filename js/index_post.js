@@ -14,7 +14,6 @@ let userIdToken = "";
 if (payloadUser) {
   userIdToken = JSON.parse(atob(payloadUser)).id; // atob
 }
-console.log(userIdToken);
 const getPostData = async (postId) => {
   let response = await fetch(`${BASE_URL3}/posts/${postId}`); // ESTA LINEA ES LA BUENA
   let data = await response.json();
@@ -101,6 +100,15 @@ const fillUserCardData = async () => {
   authorEducation.textContent = postAuthorData.data.userEducation;
   let authorDateJoined = document.getElementById("asideCard1Joined");
   authorDateJoined.textContent = postAuthorData.data.userJoined;
+  for (let i = 0; i < postData.data.postTags.length; i++) {
+    let tag = document.getElementById(`tag${i + 1}`);
+    let text = document.createTextNode(postData.data.postTags[i]);
+    tag.appendChild(text);
+  }
+  for (let i = postData.data.postTags.length; i < 4; i++) {
+    let tag = document.getElementById(`tag${i + 1}`);
+    tag.classList.add("visually-hidden");
+  }
 };
 
 fillUserCardData();

@@ -80,8 +80,12 @@ const getNewPostInputs = async () => {
   let inputs = document.querySelectorAll("input");
   inputs.forEach((item) => {
     if (item.id === "postTags") {
-      let list = item.value.split(" ").slice(0, 4);
-      post["postTags"] = list;
+      if (item.value === "") {
+        post["postTags"] = ["devto"];
+      } else {
+        let list = item.value.split(" ").slice(0, 4);
+        post["postTags"] = list;
+      }
     } else if (item.id === "postReadTime") {
       post["postReadTime"] = Number(item.value);
     } else {
