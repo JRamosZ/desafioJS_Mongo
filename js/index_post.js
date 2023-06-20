@@ -46,6 +46,8 @@ const fillAllData = async () => {
   authorImage.setAttribute("src", postAuthorData.data.userImage);
   let dropdownMenuButton1 = document.getElementById("dropdownMenuButton1");
   dropdownMenuButton1.textContent = `Top comments (${postData.data.postComments.length})`;
+  let likeCounterInMainCard = document.getElementById("likeCounterInMainCard")
+  likeCounterInMainCard.textContent = postData.data.postLikes.likeCounter
   if (tokenUser !== "") {
     let commentTextAreaImg = document.getElementById("commentTextAreaImg");
     commentTextAreaImg.setAttribute(
@@ -291,5 +293,55 @@ if (tokenUser === "") {
 
 // Funcionalidad Extra [Flujo de likes]
 
+const fillLeftNav = async () => {
+  let postId = getPostId();
+  let postData = await getPostData(postId);
+  let counterLikeButtonAdd = document.getElementById("counterLikeButtonAdd")
+  let heartSymbolLeft = document.getElementById("heartSymbolLeft")
+  if (tokenUser === "") {
+    heartSymbolLeft.textContent = "Favorite"
+  } else {
+    if(postData.data.postLikes.likeCounter === undefined || null || 0){
+      counterLikeButtonAdd.textContent = 0
+    } else {
+      counterLikeButtonAdd.textContent = postData.data.postLikes.likeCounter
+    }
+  }
+}
+fillLeftNav()
+
+const getLikeData = () => {
+    let likeData = {
+      likeAuthorId: JSON.parse(atob(payloadUser)).id,
+    };
+    return likeData;
+}
+
+
 let likeButtonAdd = document.getElementById("likeButtonAdd")
-let counterLikeButtonAdd = document.getElementById("counterLikeButtonAdd")
+if (tokenUser != "") {
+  likeButtonAdd.addEventListener("click", async () => {
+    let likeData = getLikeData();
+    if (likeData) {
+      let postId = getPostId();
+      let response = await fetch(`${BASE_URL3}/posts/${postId}/likes`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`,
+        },
+        body: JSON.stringify(likeData),
+      });
+      let postsData = await response.json();
+      if (postsData.success) {
+        fillLeftNav()
+        fillAllData();
+      } else {
+        Swal.fire({
+          title: "Error al reaccionar a esta publicación",
+          icon: "error",
+        });
+      }
+    }
+  });
+}
