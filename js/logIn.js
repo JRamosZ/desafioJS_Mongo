@@ -33,7 +33,7 @@ const checkForUsers = async () => {
   if (!data.success) {
     // alert("No pudimos iniciar sesion");
     Swal.fire({
-      title: "No pudimos iniciar sesion",
+      title: "No pudimos iniciar sesión",
       icon: "error",
     });
     return;

@@ -1,6 +1,7 @@
 const BASE_URL3 = "http://localhost:8080";
 userId = "";
 
+
 const getPostId = () => {
   let params = new URLSearchParams(document.location.search);
   postId = params.get("postId");
@@ -44,7 +45,12 @@ const fillAllData = async () => {
   contentPost.textContent = postData.data.postContent;
   let authorImage = document.getElementById("authorImage");
   authorImage.setAttribute("src", postAuthorData.data.userImage);
-
+  let dropdownMenuButton1 = document.getElementById("dropdownMenuButton1")
+  dropdownMenuButton1.textContent = `Top comments (${postData.data.postComments.length})`
+  if(tokenUser !== ""){
+    let commentTextAreaImg = document.getElementById("commentTextAreaImg");
+    commentTextAreaImg.setAttribute("src", JSON.parse(atob(payloadUser)).userImage);
+  }
   if (userIdToken === postAuthorData.data._id) {
     let btnContainer = document.getElementById("btnContainer");
     btnContainer.classList.remove("visually-hidden");
@@ -79,6 +85,52 @@ const fillAllData = async () => {
     document.getElementById("btnEdit").addEventListener("click", (event) => {
       window.location.replace(`./newPost.html?postId=${postId}`);
     });
+  }
+  let commentFrame = "";
+  for (index in postData.data.postComments){
+    commentFrame += 
+  `<div class="comments__comment">
+    <div class="comments__comment__profile">
+        <button class="b3">
+            <img src="${postData.data.postComments[index].commentAuthorImg}" alt="">
+        </button>
+        <button class="b4">
+            <img src="https://cdn-icons-png.flaticon.com/512/84/84263.png" alt="">
+        </button>
+    </div>
+    <div class="comments__comment_text">
+        <div class="comments__comment_text__box">
+            <div class="comments__comment_text__head">
+                <div class="author">
+                    <button class="b5">
+                        <b>${postData.data.postComments[index].commentAuthorName}</b>
+                    </button>
+                    <p>~</p>
+                    <button class="b6">
+                        ${postData.data.postComments[index].commentDate}
+                    </button>
+                </div>
+                <div class="button">
+                    <button class="b7">
+                        ...
+                    </button>
+                </div>
+            </div>
+        
+            <div>
+                <p>${postData.data.postComments[index].commentText}</p>
+            </div>
+        </div>
+        <div class="comment__reactions">
+            <button><p><img src="https://cdn-icons-png.flaticon.com/512/535/535285.png" alt=""> 6 likes</p></button>
+            <button><p><img src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png" alt=""> Reply</p></button>
+        </div>
+    </div>
+  </div>`
+  let divPostComments = document.getElementById("postComments")
+  console.log(divPostComments)
+  divPostComments.innerHTML = commentFrame
+  console.log(divPostComments)
   }
 };
 
@@ -189,3 +241,51 @@ function closeMenuNavPost() {
   });
 }
 closeMenuNavPost();
+
+// Funcionalidad Extra [Flujo de comentarios]
+
+const getCommentData = () => {
+  let commentContent = document.getElementById("commentContent").value
+  if (commentContent === ""){
+    return false
+  } else {
+    let commentData = {
+        commentAuthorId: JSON.parse(atob(payloadUser)).id,
+        commentAuthorImg: JSON.parse(atob(payloadUser)).userImage,
+        commentAuthorName: JSON.parse(atob(payloadUser)).userName,
+        commentDate: new Date().toDateString(),
+        commentText: commentContent,
+    }
+    return commentData
+  }
+}
+
+if(tokenUser === ""){
+  let commentTextArea = document.getElementById("commentTextArea");
+  commentTextArea.classList.add("visually-hidden")
+} else {
+  let commentSubmit = document.getElementById("commentSubmit");
+  commentSubmit.addEventListener("click", async ()=>{
+    let commentData = getCommentData()
+    if(commentData){
+      let postId = getPostId();
+      console.log(tokenUser)
+      let response = await fetch(`${BASE_URL3}/complements/${postId}`, {
+        method: "PATCH",
+        headers : { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`},
+          body: JSON.stringify(commentData),
+      });
+      let postsData = await response.json();
+      if(postsData.success){
+        window.location.replace(`./index_post.html?postId=${postId}`)
+      } else {
+        Swal.fire({
+          title: "Error al subir el comentarior",
+          icon: "error",
+        });
+      }
+    }
+  })
+}
