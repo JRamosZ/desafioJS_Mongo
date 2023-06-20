@@ -90,7 +90,11 @@ const getNewPostInputs = async () => {
 
   for (key in post) {
     if (post[key] === "") {
-      alert(`El campo ${key} está vacío`);
+      // alert(`El campo ${key} está vacío`);
+      Swal.fire({
+        title: `El campo ${key} está vacío`,
+        icon: "warning",
+      });
       return none;
     }
   }
@@ -129,10 +133,19 @@ const saveNewPost = async (post) => {
 
   let data = await response.json();
   if (data.success) {
-    alert("Post guardado con éxito");
+    //alert("Post guardado con éxito");
+    await Swal.fire({
+      title: "Post guardado con éxito",
+      icon: "success",
+      timer: 1000,
+    });
     window.location.replace(`../index.html`);
   } else {
-    alert("Post no guardado, intenta nuevamente");
+    //alert("Post no guardado, intenta nuevamente");
+    Swal.fire({
+      title: "Post no guardado, intenta nuevamente",
+      icon: "error",
+    });
   }
   return data;
 };

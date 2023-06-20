@@ -60,10 +60,20 @@ const fillAllData = async () => {
         let data = await response.json();
         console.log(data);
         if (data.success) {
-          alert("Post Eliminado con éxito");
+          //alert("Post Eliminado con éxito");
+          await Swal.fire({
+            title: "Post Eliminado con éxito",
+            icon: "success",
+            timer: 1500,
+          });
           window.location.replace("../index.html");
         } else {
-          alert("Post No eliminado");
+          //alert("Post No eliminado");
+          await Swal.fire({
+            title: "Post No eliminado",
+            icon: "success",
+            timer: 1500,
+          });
         }
       });
 
