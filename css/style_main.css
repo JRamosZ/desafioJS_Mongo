@@ -499,7 +499,7 @@ body {
   .section__navSide_tag, .section__navSide_sponsor_title1, .section__navSide_sponsor_title2 {
     display: none;
   }
-  body {
+  body.block {
     overflow-x: scroll;
     overflow-y: hidden;
   }

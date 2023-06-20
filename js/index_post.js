@@ -1,5 +1,5 @@
 const BASE_URL3 = "http://localhost:8080";
-let userId = "";
+userId = "";
 
 const getPostId = () => {
   let params = new URLSearchParams(document.location.search);
@@ -7,16 +7,13 @@ const getPostId = () => {
   return postId;
 };
 
-const getUsertId = () => {
-  let params = new URLSearchParams(document.location.search);
-  userId = params.get("userId");
-  if (userId === null) {
-    window.location.replace(`./views/login.html`);
-  } else {
-    return userId;
-  }
-};
+const tokenUser = localStorage.getItem("token") || "";
+const payloadUser = tokenUser.split(".")[1];
 
+let userIdToken = "";
+if (payloadUser) {
+  userIdToken = JSON.parse(atob(payloadUser)).id; // atob
+}
 const getPostData = async (postId) => {
   let response = await fetch(`${BASE_URL3}/posts/${postId}`); // ESTA LINEA ES LA BUENA
   let data = await response.json();
@@ -47,6 +44,42 @@ const fillAllData = async () => {
   contentPost.textContent = postData.data.postContent;
   let authorImage = document.getElementById("authorImage");
   authorImage.setAttribute("src", postAuthorData.data.userImage);
+
+  if (userIdToken === postAuthorData.data._id) {
+    let btnContainer = document.getElementById("btnContainer");
+    btnContainer.classList.remove("visually-hidden");
+
+    document
+      .getElementById("btnDelete")
+      .addEventListener("click", async (event) => {
+        let response = await fetch(`${BASE_URL3}/posts/${postData.data._id}`, {
+          method: "DELETE",
+          headers: { authorization: `Bearer ${tokenUser}` },
+        });
+        let data = await response.json();
+        console.log(data);
+        if (data.success) {
+          //alert("Post Eliminado con éxito");
+          await Swal.fire({
+            title: "Post Eliminado con éxito",
+            icon: "success",
+            timer: 1500,
+          });
+          window.location.replace("../index.html");
+        } else {
+          //alert("Post No eliminado");
+          await Swal.fire({
+            title: "Post No eliminado",
+            icon: "success",
+            timer: 1500,
+          });
+        }
+      });
+
+    document.getElementById("btnEdit").addEventListener("click", (event) => {
+      window.location.replace(`./newPost.html?postId=${postId}`);
+    });
+  }
 };
 
 fillAllData();
@@ -67,6 +100,15 @@ const fillUserCardData = async () => {
   authorEducation.textContent = postAuthorData.data.userEducation;
   let authorDateJoined = document.getElementById("asideCard1Joined");
   authorDateJoined.textContent = postAuthorData.data.userJoined;
+  for (let i = 0; i < postData.data.postTags.length; i++) {
+    let tag = document.getElementById(`tag${i + 1}`);
+    let text = document.createTextNode(postData.data.postTags[i]);
+    tag.appendChild(text);
+  }
+  for (let i = postData.data.postTags.length; i < 4; i++) {
+    let tag = document.getElementById(`tag${i + 1}`);
+    tag.classList.add("visually-hidden");
+  }
 };
 
 fillUserCardData();
@@ -103,11 +145,6 @@ const createCard2Aside = (userPost, postKey) => {
   anchor.appendChild(divTags);
 
   return anchor;
-
-  // let asideCard2 = document.getElementById("asideCard2")
-  // asideCard2.appendChild(anchor)
-  // console.log(asideCard2)
-  // return asideCard2
 };
 
 const getAllPosts = async () => {

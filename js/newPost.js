@@ -4,8 +4,12 @@ const tooltipTriggerList = document.querySelectorAll(
 const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
 );
-const BASE_URL = "htt://localhost:8080";
-let userId = "";
+const BASE_URL = "http://localhost:8080";
+const token = localStorage.getItem("token") || "";
+const payload = token.split(".")[1];
+const destructuracion = atob(payload);
+const userId = JSON.parse(atob(payload)).id; // atob
+const userName = JSON.parse(atob(payload)).userName;
 
 let textBlock1 = document.getElementById("popText1");
 let textBlock2 = document.getElementById("popText2");
@@ -29,13 +33,59 @@ document.getElementById("postContent").addEventListener("click", () => {
   textBlock3.classList = [];
 });
 
+let postId = "";
+
+const getPostData = async (postId) => {
+  let response = await fetch(`${BASE_URL}/posts/${postId}`); // ESTA LINEA ES LA BUENA
+  let data = await response.json();
+  return data;
+};
+const getPostId = () => {
+  let params = new URLSearchParams(document.location.search);
+  postId = params.get("postId");
+  return postId;
+};
+
+const verifyEdit = async () => {
+  const postEdit = getPostId();
+  if (postEdit) {
+    const data = await getPostData(postEdit);
+    const url = document.querySelector("#postImageURL");
+    const postReadTime = document.querySelector("#postReadTime");
+    const postTitle = document.querySelector("#postTitle");
+    const postTags = document.querySelector("#postTags");
+    const postContent = document.querySelector("#postContent");
+
+    url.value = data.data.postImageURL;
+    postReadTime.value = data.data.postReadTime;
+    postTitle.value = data.data.postTitle;
+    postTags.value = data.data.postTags.join(" ");
+    postContent.textContent = data.data.postContent;
+
+    return true;
+  } else {
+    return false;
+  }
+};
+
+let isEdit = "";
+const starterFunction = async () => {
+  isEdit = await verifyEdit();
+};
+// const isEdit = verifyEdit();
+starterFunction();
+
 const getNewPostInputs = async () => {
   let post = {};
   let inputs = document.querySelectorAll("input");
   inputs.forEach((item) => {
     if (item.id === "postTags") {
-      let list = item.value.split(" ").slice(0, 4);
-      post["postTags"] = list;
+      if (item.value === "") {
+        post["postTags"] = ["devto"];
+      } else {
+        let list = item.value.split(" ").slice(0, 4);
+        post["postTags"] = list;
+      }
     } else if (item.id === "postReadTime") {
       post["postReadTime"] = Number(item.value);
     } else {
@@ -47,7 +97,11 @@ const getNewPostInputs = async () => {
 
   for (key in post) {
     if (post[key] === "") {
-      alert(`El campo ${key} está vacío`);
+      // alert(`El campo ${key} está vacío`);
+      Swal.fire({
+        title: `El campo ${key} está vacío`,
+        icon: "warning",
+      });
       return none;
     }
   }
@@ -57,23 +111,49 @@ const getNewPostInputs = async () => {
 
   let relevance = Math.ceil(Math.random() * 10);
   post["postRelevance"] = relevance;
-
-  let userKey = getUserId();
-  let data = await getUserData(userKey);
-  post["postAuthor"] = `${data.userName} ${data.userLastname}`;
-  post["postAuthorId"] = userKey;
-  console.log(post);
+  post["postAuthor"] = userName;
+  post["postAuthorId"] = userId;
   return post;
 };
 
 const saveNewPost = async (post) => {
-  let response = await fetch(`${BASE_URL}/posts/.json`, {
-    method: "POST",
-    body: JSON.stringify(post),
-  });
+  let response = "";
+  if (isEdit === true) {
+    response = await fetch(`${BASE_URL}/posts/${postId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(post),
+    });
+  } else if (!isEdit) {
+    response = await fetch(`${BASE_URL}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(post),
+    });
+  }
 
   let data = await response.json();
-  console.log(data);
+  if (data.success) {
+    //alert("Post guardado con éxito");
+    await Swal.fire({
+      title: "Post guardado con éxito",
+      icon: "success",
+      timer: 1000,
+    });
+    window.location.replace(`../index.html`);
+  } else {
+    //alert("Post no guardado, intenta nuevamente");
+    Swal.fire({
+      title: "Post no guardado, intenta nuevamente",
+      icon: "error",
+    });
+  }
   return data;
 };
 
@@ -81,31 +161,14 @@ let publishButton = document.getElementById("publishButton");
 publishButton.addEventListener("click", async (event) => {
   let post = await getNewPostInputs();
   post ? saveNewPost(post) : null;
-  alert("Post guardado con éxito");
-  window.location.replace(`../index.html?userId=${userId}`);
 });
-
-const getUserId = () => {
-  let params = new URLSearchParams(document.location.search);
-  userId = params.get("userId");
-  return userId;
-};
-
-const getUserData = async (userId) => {
-  let response = await fetch(`${BASE_URL}/users/${userId}.json`);
-  let data = await response.json();
-  console.log(data);
-  return data;
-};
 
 let indexButton = document.getElementById("indexButton");
 indexButton.addEventListener("click", () => {
-  window.location.replace(`../index.html?userId=${userId}`);
+  window.location.replace(`../index.html`);
 });
 
 let closeNewPost = document.getElementById("closeNewPost");
 closeNewPost.addEventListener("click", () => {
-  window.location.replace(`../index.html?userId=${userId}`);
+  window.location.replace(`../index.html`);
 });
-
-getUserId();

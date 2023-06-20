@@ -2,15 +2,22 @@ const BASE_URL4 = "http://localhost:8080";
 
 const dataValidation = async () => {
   let inputs = document.querySelectorAll("form input");
-  console.log(inputs);
   for (let i = 0; i < inputs.length; i++) {
     if (inputs[i].value === "") {
-      alert(`El campo ${inputs[i].name} no puede estar vacío`);
+      // alert(`El campo ${inputs[i].name} no puede estar vacío`);
+      Swal.fire({
+        title: `El campo ${inputs[i].name} no puede estar vacío`,
+        icon: "warning",
+      });
       return;
     }
   }
   if (inputs[4].value !== inputs[5].value) {
-    alert(`Los campos de contraseña no coinciden`);
+    //alert(`Los campos de contraseña no coinciden`);
+    Swal.fire({
+      title: "Los campos de contraseña no coinciden",
+      icon: "error",
+    });
     return;
   }
   // Exitoso
@@ -62,10 +69,20 @@ const dataValidation = async () => {
   });
   let data = await response.json();
   if (!data.success) {
-    alert("No pudimos registrar usuario");
+    // alert("No pudimos registrar usuario");
+    Swal.fire({
+      title: "No pudimos registrar usuario",
+      icon: "error",
+    });
     return;
+  } else {
+    await Swal.fire({
+      title: "Usuario Registrado",
+      icon: "success",
+      timer: 1500,
+    });
   }
-  alert("Usuario Registrado");
+  // alert("Usuario Registrado");
   const logInBody = {
     email: body.userEmail,
     password: body.userPassword,
@@ -77,7 +94,11 @@ const dataValidation = async () => {
   });
   let data2 = await response2.json();
   if (!data2.success) {
-    alert("No pudimos iniciar sesion");
+    //alert("No pudimos iniciar sesion");
+    Swal.fire({
+      title: "No pudimos iniciar sesión",
+      icon: "error",
+    });
     window.location.replace(`./login.html`);
     return;
   }
