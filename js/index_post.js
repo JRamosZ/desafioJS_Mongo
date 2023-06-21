@@ -46,8 +46,8 @@ const fillAllData = async () => {
   authorImage.setAttribute("src", postAuthorData.data.userImage);
   let dropdownMenuButton1 = document.getElementById("dropdownMenuButton1");
   dropdownMenuButton1.textContent = `Top comments (${postData.data.postComments.length})`;
-  let likeCounterInMainCard = document.getElementById("likeCounterInMainCard")
-  likeCounterInMainCard.textContent = postData.data.postLikes.likeCounter
+  let likeCounterInMainCard = document.getElementById("likeCounterInMainCard");
+  likeCounterInMainCard.textContent = postData.data.postLikes.likeCounter;
   if (tokenUser !== "") {
     let commentTextAreaImg = document.getElementById("commentTextAreaImg");
     commentTextAreaImg.setAttribute(
@@ -72,7 +72,6 @@ const fillAllData = async () => {
           await Swal.fire({
             title: "Post Eliminado con éxito",
             icon: "success",
-            timer: 1500,
           });
           window.location.replace("../index.html");
         } else {
@@ -80,7 +79,6 @@ const fillAllData = async () => {
           await Swal.fire({
             title: "Post No eliminado",
             icon: "success",
-            timer: 1500,
           });
         }
       });
@@ -296,29 +294,28 @@ if (tokenUser === "") {
 const fillLeftNav = async () => {
   let postId = getPostId();
   let postData = await getPostData(postId);
-  let counterLikeButtonAdd = document.getElementById("counterLikeButtonAdd")
-  let heartSymbolLeft = document.getElementById("heartSymbolLeft")
+  let counterLikeButtonAdd = document.getElementById("counterLikeButtonAdd");
+  let heartSymbolLeft = document.getElementById("heartSymbolLeft");
   if (tokenUser === "") {
-    heartSymbolLeft.textContent = "Favorite"
+    heartSymbolLeft.textContent = "Favorite";
   } else {
-    if(postData.data.postLikes.likeCounter === undefined || null || 0){
-      counterLikeButtonAdd.textContent = 0
+    if (postData.data.postLikes.likeCounter === undefined || null || 0) {
+      counterLikeButtonAdd.textContent = 0;
     } else {
-      counterLikeButtonAdd.textContent = postData.data.postLikes.likeCounter
+      counterLikeButtonAdd.textContent = postData.data.postLikes.likeCounter;
     }
   }
-}
-fillLeftNav()
+};
+fillLeftNav();
 
 const getLikeData = () => {
-    let likeData = {
-      likeAuthorId: JSON.parse(atob(payloadUser)).id,
-    };
-    return likeData;
-}
+  let likeData = {
+    likeAuthorId: JSON.parse(atob(payloadUser)).id,
+  };
+  return likeData;
+};
 
-
-let likeButtonAdd = document.getElementById("likeButtonAdd")
+let likeButtonAdd = document.getElementById("likeButtonAdd");
 if (tokenUser != "") {
   likeButtonAdd.addEventListener("click", async () => {
     let likeData = getLikeData();
@@ -334,7 +331,7 @@ if (tokenUser != "") {
       });
       let postsData = await response.json();
       if (postsData.success) {
-        fillLeftNav()
+        fillLeftNav();
         fillAllData();
       } else {
         Swal.fire({

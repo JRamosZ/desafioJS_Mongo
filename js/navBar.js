@@ -96,7 +96,7 @@ signOutButton.addEventListener("click", (event) => {
   if (window.location.pathname === "/index.html") {
     localStorage.clear();
     window.location.replace("./views/login.html");
-  } else if (window.location.pathname === "./views/index_post.html") {
+  } else {
     localStorage.clear();
     window.location.replace("./login.html");
   }

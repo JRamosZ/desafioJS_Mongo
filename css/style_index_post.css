@@ -10,7 +10,7 @@ body {
 .nav-left {
   top: 100px;
   z-index: 1;
-  /* background-color: rgb(242, 242, 242); */
+  background-color: rgb(242, 242, 242);
 }
 
 .nav-left__drop__button_h1 {

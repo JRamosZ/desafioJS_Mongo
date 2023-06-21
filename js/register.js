@@ -79,7 +79,6 @@ const dataValidation = async () => {
     await Swal.fire({
       title: "Usuario Registrado",
       icon: "success",
-      timer: 1500,
     });
   }
   // alert("Usuario Registrado");

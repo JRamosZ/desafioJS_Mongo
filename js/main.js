@@ -43,6 +43,7 @@ const createCard = (post) => {
     postTags,
     postReadTime,
     postComments,
+    postLikes,
   } = post;
 
   let card = document.createElement("div");
@@ -121,8 +122,9 @@ const createCard = (post) => {
 
   let spanReaction = document.createElement("span");
   spanReaction.classList.add("reactions", "px-2");
-  let textReaction = document.createTextNode("22 Reactions");
-
+  let textReaction = document.createTextNode(
+    `${postLikes.likeCounter} reactions`
+  );
   spanReaction.appendChild(textReaction);
 
   let aComments = document.createElement("a");
