@@ -44,7 +44,17 @@ const fillAllData = async () => {
   contentPost.textContent = postData.data.postContent;
   let authorImage = document.getElementById("authorImage");
   authorImage.setAttribute("src", postAuthorData.data.userImage);
-
+  let dropdownMenuButton1 = document.getElementById("dropdownMenuButton1");
+  dropdownMenuButton1.textContent = `Top comments (${postData.data.postComments.length})`;
+  let likeCounterInMainCard = document.getElementById("likeCounterInMainCard");
+  likeCounterInMainCard.textContent = postData.data.postLikes.likeCounter;
+  if (tokenUser !== "") {
+    let commentTextAreaImg = document.getElementById("commentTextAreaImg");
+    commentTextAreaImg.setAttribute(
+      "src",
+      JSON.parse(atob(payloadUser)).userImage
+    );
+  }
   if (userIdToken === postAuthorData.data._id) {
     let btnContainer = document.getElementById("btnContainer");
     btnContainer.classList.remove("visually-hidden");
@@ -57,13 +67,11 @@ const fillAllData = async () => {
           headers: { authorization: `Bearer ${tokenUser}` },
         });
         let data = await response.json();
-        console.log(data);
         if (data.success) {
           //alert("Post Eliminado con éxito");
           await Swal.fire({
             title: "Post Eliminado con éxito",
             icon: "success",
-            timer: 1500,
           });
           window.location.replace("../index.html");
         } else {
@@ -71,7 +79,6 @@ const fillAllData = async () => {
           await Swal.fire({
             title: "Post No eliminado",
             icon: "success",
-            timer: 1500,
           });
         }
       });
@@ -79,6 +86,50 @@ const fillAllData = async () => {
     document.getElementById("btnEdit").addEventListener("click", (event) => {
       window.location.replace(`./newPost.html?postId=${postId}`);
     });
+  }
+  let commentFrame = "";
+  postData.data.postComments = postData.data.postComments.reverse();
+  for (let index in postData.data.postComments) {
+    commentFrame += `<div class="comments__comment">
+    <div class="comments__comment__profile">
+        <button class="b3">
+            <img src="${postData.data.postComments[index].commentAuthorImg}" alt="">
+        </button>
+        <button class="b4">
+            <img src="https://cdn-icons-png.flaticon.com/512/84/84263.png" alt="">
+        </button>
+    </div>
+    <div class="comments__comment_text">
+        <div class="comments__comment_text__box">
+            <div class="comments__comment_text__head">
+                <div class="author">
+                    <button class="b5">
+                        <b>${postData.data.postComments[index].commentAuthorName}</b>
+                    </button>
+                    <p>~</p>
+                    <button class="b6">
+                        ${postData.data.postComments[index].commentDate}
+                    </button>
+                </div>
+                <div class="button">
+                    <button class="b7">
+                        ...
+                    </button>
+                </div>
+            </div>
+        
+            <div>
+                <p>${postData.data.postComments[index].commentText}</p>
+            </div>
+        </div>
+        <div class="comment__reactions">
+            <button><p><img src="https://cdn-icons-png.flaticon.com/512/535/535285.png" alt=""> 6 likes</p></button>
+            <button><p><img src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png" alt=""> Reply</p></button>
+        </div>
+    </div>
+  </div>`;
+    let divPostComments = document.getElementById("postComments");
+    divPostComments.innerHTML = commentFrame;
   }
 };
 
@@ -189,3 +240,105 @@ function closeMenuNavPost() {
   });
 }
 closeMenuNavPost();
+
+// Funcionalidad Extra [Flujo de comentarios]
+
+const getCommentData = () => {
+  let commentContent = document.getElementById("commentContent").value;
+  if (commentContent === "") {
+    return false;
+  } else {
+    let commentData = {
+      commentAuthorId: JSON.parse(atob(payloadUser)).id,
+      commentAuthorImg: JSON.parse(atob(payloadUser)).userImage,
+      commentAuthorName: JSON.parse(atob(payloadUser)).userName,
+      commentDate: new Date().toDateString(),
+      commentText: commentContent,
+    };
+    return commentData;
+  }
+};
+
+if (tokenUser === "") {
+  let commentTextArea = document.getElementById("commentTextArea");
+  commentTextArea.classList.add("visually-hidden");
+} else {
+  let commentSubmit = document.getElementById("commentSubmit");
+  commentSubmit.addEventListener("click", async () => {
+    let commentData = getCommentData();
+    if (commentData) {
+      let postId = getPostId();
+      let response = await fetch(`${BASE_URL3}/posts/${postId}/comments`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`,
+        },
+        body: JSON.stringify(commentData),
+      });
+      let postsData = await response.json();
+      if (postsData.success) {
+        window.location.replace(`./index_post.html?postId=${postId}`);
+      } else {
+        Swal.fire({
+          title: "Error al subir el comentario",
+          icon: "error",
+        });
+      }
+    }
+  });
+}
+
+// Funcionalidad Extra [Flujo de likes]
+
+const fillLeftNav = async () => {
+  let postId = getPostId();
+  let postData = await getPostData(postId);
+  let counterLikeButtonAdd = document.getElementById("counterLikeButtonAdd");
+  let heartSymbolLeft = document.getElementById("heartSymbolLeft");
+  if (tokenUser === "") {
+    heartSymbolLeft.textContent = "Favorite";
+  } else {
+    if (postData.data.postLikes.likeCounter === undefined || null || 0) {
+      counterLikeButtonAdd.textContent = 0;
+    } else {
+      counterLikeButtonAdd.textContent = postData.data.postLikes.likeCounter;
+    }
+  }
+};
+fillLeftNav();
+
+const getLikeData = () => {
+  let likeData = {
+    likeAuthorId: JSON.parse(atob(payloadUser)).id,
+  };
+  return likeData;
+};
+
+let likeButtonAdd = document.getElementById("likeButtonAdd");
+if (tokenUser != "") {
+  likeButtonAdd.addEventListener("click", async () => {
+    let likeData = getLikeData();
+    if (likeData) {
+      let postId = getPostId();
+      let response = await fetch(`${BASE_URL3}/posts/${postId}/likes`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`,
+        },
+        body: JSON.stringify(likeData),
+      });
+      let postsData = await response.json();
+      if (postsData.success) {
+        fillLeftNav();
+        fillAllData();
+      } else {
+        Swal.fire({
+          title: "Error al reaccionar a esta publicación",
+          icon: "error",
+        });
+      }
+    }
+  });
+}

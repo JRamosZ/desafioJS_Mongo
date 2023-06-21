@@ -39,7 +39,7 @@
             <div id="notLoggedDiv" class="">
                 <button id="logIn" class="lod_in_log button__post btn btn-outline-primary" type="submit"><b>Log in</b></button>
                 <button id="createAccount" class="create_post_log button__post btn btn-outline-primary" type="submit"><b>Create account</b></button>
-              </div>
+            </div>
         </div>
     </header>
     <main class="main-container container-lg">
@@ -48,24 +48,19 @@
                 <nav class="nav-left col-12 col-md-1 pe-0 pt-3 pb-3 position-sticky sticky-bottom sticky-md-top h-100">
                     <div class="p-1 rounded">
                         <div class="nav-left d-flex flex-row flex-md-column justify-content-around align-content-center text-center position-sticky sticky-top gap-5 rounded">
-                            <div class="btn-group dropend nav-left__drop__div text-center d-flex justify-content-around m-0">
-                                <button type="button" class="nav-left__drop__button_h1 btn border border-0 dropdown d-flex  align-content-center justify-content-center" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="material-symbols-outlined more_horiz m-0">heart_plus</span>
+                            <div class="btn-group dropend nav-left__drop__div text-center d-flex flex-column m-0">
+                                <button type="button" class="nav-left__drop__button_h1 btn border border-0 dropdown d-flex  align-content-center justify-content-center"  id="likeButtonAdd">
+                                    <span class="material-symbols-outlined more_horiz m-0" id="heartSymbolLeft">heart_plus</span>
+                                    <span id="counterLikeButtonAdd">0</span>
                                 </button>
-                                <ul class="nav-left__ul__drop_h dropdown-menu border shadow-lg p-0 m-0">
-                                    <li class="nav-left__li"><button
-                                        class="dropdown-item nav-left__icons d-flex justify-content-between p-3 rounded bg-light align-content-center"
-                                        type="button"><h4 class="m-0 p-0">💖&nbsp;&nbsp;🦄&nbsp;&nbsp; 🤯&nbsp;&nbsp; 🙌&nbsp;&nbsp; 🔥</h4></button>
-                                    </li>
-                                </ul>
                             </div>
                             <div class="btn-group dropend nav-left__drop__div text-center d-flex justify-content-around m-0">
-                                <button type="button" class="nav-left__drop__button_h2 btn border border-0 dropdown d-flex  align-content-center justify-content-center " data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="nav-left__drop__button_h2 btn border border-0 dropdown d-flex  align-content-center justify-content-center">
                                     <span class="material-symbols-outlined more_horiz m-0">mode_comment</span>
                                 </button>
                             </div>
                             <div class="btn-group dropend nav-left__drop__div text-center d-flex justify-content-around m-0">
-                                <button type="button" class="nav-left__drop__button_h3 btn border border-0 dropdown d-flex  align-content-center justify-content-center " data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="nav-left__drop__button_h3 btn border border-0 dropdown d-flex  align-content-center justify-content-center">
                                     <span class="material-symbols-outlined more_horiz m-0">bookmark</span>
                                 </button>
                             </div>
@@ -136,11 +131,11 @@
                                     </div>
                                     <div
                                         class="reactions d-flex flex-row justify-content-between gap-3 gap-sm-5 justify-content-sm-start align-items-center me-0 ms-0 me-sm-2 ms-sm-2 me-md-5 ms-md-5 mt-5">
-                                        <div>💖 134</div>
-                                        <div>🦄 9</div>
-                                        <div>🤯 4</div>
-                                        <div>🙌 7</div>
-                                        <div>🔥 11</div>
+                                        <div>💖 <span id="likeCounterInMainCard">134</span></div>
+                                        <div>🦄</div>
+                                        <div>🤯</div>
+                                        <div>🙌</div>
+                                        <div>🔥</div>
                                     </div>
                                     <div class="title, me-0 ms-0 me-sm-2 ms-sm-2 me-md-5 ms-md-5">
                                         <h2 id="titlePost" class="title1 display-5">
@@ -201,20 +196,59 @@
                                         </div>
 
                                     </div>
-                                    <div class="d-flex gap-3 align-items-start mb-3">
+                                    <div class="d-flex gap-3 align-items-start mb-3" id="commentTextArea">
                                         <img class="avatar-sm" src="https://randomuser.me/api/portraits/women/51.jpg"
-                                            alt="">
+                                            alt="" id="commentTextAreaImg">
                                         <div class="flex-grow-1">
-                                            <textarea name="" id="" cols="30" rows="10"
+                                            <textarea name="" id="commentContent" cols="30" rows="4"
                                                 class="form-control w-100 mb-3"></textarea>
                                             <div class="flex gap-3">
-                                                <button class="btn btn-dev-purple text-white">Submit</button>
+                                                <button class="btn btn-dev-purple text-white" id="commentSubmit">Submit</button>
                                                 <button class="btn btn-secondary">Preview</button>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="comments" id="postComments">
+                                        <!-- <div class="comments__comment">
+                                            <div class="comments__comment__profile">
+                                                <button class="b3">
+                                                    <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--IhWu_FIx--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/450437/2a3854a6-7ced-4167-b0c5-1bcf90e6bb67.jpg" alt="">
+                                                </button>
+                                                <button class="b4">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/84/84263.png" alt="">
+                                                </button>
+                                            </div>
+                                            <div class="comments__comment_text">
+                                                <div class="comments__comment_text__box">
+                                                    <div class="comments__comment_text__head">
+                                                        <div class="author">
+                                                            <button class="b5">
+                                                                <b>Taufik Nurhidayat</b>
+                                                            </button>
+                                                            <p>~</p>
+                                                            <button class="b6">
+                                                                Apr 2
+                                                            </button>
+                                                        </div>
+                                                        <div class="button">
+                                                            <button class="b7">
+                                                                ...
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <div>
+                                                        <p>Also you can compress image for web</p>
+                                                    </div>
+                                                </div>
+                                                <div class="comment__reactions">
+                                                    <button><p><img src="https://cdn-icons-png.flaticon.com/512/535/535285.png" alt=""> 6 likes</p></button>
+                                                    <button><p><img src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png" alt=""> Reply</p></button>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
                                     <div class="d-flex justify-content-center gap-3 align-items-center">
-
                                         <a class="comments-footer__text" href="#">Code of Conduct</a>
                                         <p class="comments-footer__dot">.</p>
                                         <a class="comments-footer__text" href="#">Report abuse</a>

@@ -23,18 +23,18 @@ function blockScroll() {
   let bodyBlock = document.querySelector("body");
   let hamburgerButton = document.querySelector("#hamburgerButton");
   hamburgerButton.addEventListener("click", () => {
-      bodyBlock.classList.toggle("block");
+    bodyBlock.classList.toggle("block");
   });
-};
+}
 blockScroll();
 
 function enableScroll() {
   let bodyBlock = document.querySelector("body");
   let closeButton = document.querySelector("#navlateralClose_post");
   closeButton.addEventListener("click", () => {
-      bodyBlock.classList.toggle("block");
+    bodyBlock.classList.toggle("block");
   });
-};
+}
 enableScroll();
 
 // Getting data
@@ -96,7 +96,7 @@ signOutButton.addEventListener("click", (event) => {
   if (window.location.pathname === "/index.html") {
     localStorage.clear();
     window.location.replace("./views/login.html");
-  } else if (window.location.pathname === "/views/index_post.html") {
+  } else {
     localStorage.clear();
     window.location.replace("./login.html");
   }
@@ -104,10 +104,18 @@ signOutButton.addEventListener("click", (event) => {
 
 const logInButton = document.getElementById("logIn");
 logInButton.addEventListener("click", (event) => {
-  window.location.replace("./views/login.html");
+  if (window.location.pathname === "/index.html") {
+    window.location.replace("./views/login.html");
+  } else {
+    window.location.replace("./login.html");
+  }
 });
 
 const registerButton = document.getElementById("createAccount");
 registerButton.addEventListener("click", (event) => {
-  window.location.replace("./views/register.html");
+  if (window.location.pathname === "/index.html") {
+    window.location.replace("./views/register.html");
+  } else {
+    window.location.replace("./register.html");
+  }
 });

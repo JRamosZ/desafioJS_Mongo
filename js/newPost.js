@@ -144,7 +144,6 @@ const saveNewPost = async (post) => {
     await Swal.fire({
       title: "Post guardado con éxito",
       icon: "success",
-      timer: 1000,
     });
     window.location.replace(`../index.html`);
   } else {
